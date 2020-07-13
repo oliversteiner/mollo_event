@@ -1,0 +1,17 @@
+{
+    "name": "drupal/mollo_event",
+    "type": "drupal-module",
+    "description": "Mollo Event",
+    "keywords": [
+        "drupal",
+        "mollo",
+        "event"
+    ],
+    "homepage": "https://github.com/oliversteiner/mollo_event",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://github.com/oliversteiner/mollo_event/issues",
+        "source": "https://github.com/oliversteiner/mollo_event"
+    },
+    "require": {}
+}

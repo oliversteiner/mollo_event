@@ -1,0 +1,9 @@
+mollo_event.main:
+  css:
+    theme:
+      assets/css/mollo_event.css: {}
+  js:
+    assets/js/mollo_event.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
