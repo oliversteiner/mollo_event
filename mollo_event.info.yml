@@ -1,4 +1,4 @@
-name: 'Mollo Event Module'
+name: 'Mollo Event'
 type: module
 description: 'Mollo Event'
 core: 8.x
