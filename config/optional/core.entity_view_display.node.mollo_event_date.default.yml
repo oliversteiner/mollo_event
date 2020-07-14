@@ -1,0 +1,143 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_event_date.body
+    - field.field.node.mollo_event_date.field_mollo_director
+    - field.field.node.mollo_event_date.field_mollo_door_opening
+    - field.field.node.mollo_event_date.field_mollo_end
+    - field.field.node.mollo_event_date.field_mollo_event
+    - field.field.node.mollo_event_date.field_mollo_host
+    - field.field.node.mollo_event_date.field_mollo_notes
+    - field.field.node.mollo_event_date.field_mollo_number
+    - field.field.node.mollo_event_date.field_mollo_show_end
+    - field.field.node.mollo_event_date.field_mollo_show_start
+    - field.field.node.mollo_event_date.field_mollo_start
+    - field.field.node.mollo_event_date.field_mollo_status
+    - field.field.node.mollo_event_date.field_mollo_description
+    - node.type.mollo_event_date
+  module:
+    - datetime
+    - text
+    - user
+id: node.mollo_event_date.default
+targetEntityType: node
+bundle: mollo_event_date
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_mollo_director:
+    weight: 109
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_door_opening:
+    weight: 104
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_end:
+    weight: 103
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_event:
+    weight: 108
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_host:
+    weight: 110
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_notes:
+    weight: 112
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_number:
+    weight: 113
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_mollo_show_end:
+    weight: 106
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_mollo_show_start:
+    weight: 105
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_mollo_start:
+    weight: 102
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_status:
+    weight: 107
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_description:
+    weight: 111
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

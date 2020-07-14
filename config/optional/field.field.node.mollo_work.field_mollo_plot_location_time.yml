@@ -1,0 +1,19 @@
+uuid: 32b89cca-f54a-4b2b-b1ee-11a5f35505ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_plot_location_time
+    - node.type.mollo_work
+id: node.mollo_work.field_mollo_plot_location_time
+field_name: field_mollo_plot_location_time
+entity_type: node
+bundle: mollo_work
+label: 'Plot Location and Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

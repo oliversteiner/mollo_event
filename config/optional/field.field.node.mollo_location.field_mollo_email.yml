@@ -1,0 +1,19 @@
+uuid: 81f2ddaf-5b1b-4dc2-a484-f7a4f37ecf31
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_email
+    - node.type.mollo_location
+id: node.mollo_location.field_mollo_email
+field_name: field_mollo_email
+entity_type: node
+bundle: mollo_location
+label: Email
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

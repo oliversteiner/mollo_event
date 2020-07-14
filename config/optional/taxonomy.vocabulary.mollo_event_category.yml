@@ -1,0 +1,8 @@
+uuid: 1277209f-a1e6-4f37-b8ae-6bf904770e9b
+langcode: und
+status: true
+dependencies: {  }
+name: 'Event Category'
+vid: mollo_event_category
+description: ''
+weight: 0

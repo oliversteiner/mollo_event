@@ -1,0 +1,22 @@
+uuid: 3c13e40f-2210-471f-bfcd-f7ebe88cf64c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_location
+id: node.mollo_location.status
+field_name: status
+entity_type: node
+bundle: mollo_location
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

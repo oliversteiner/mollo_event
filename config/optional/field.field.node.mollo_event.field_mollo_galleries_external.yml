@@ -1,0 +1,23 @@
+uuid: 858052f6-754f-4b33-94ff-b15142100eb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_galleries_external
+    - node.type.mollo_event
+  module:
+    - link
+id: node.mollo_event.field_mollo_galleries_external
+field_name: field_mollo_galleries_external
+entity_type: node
+bundle: mollo_event
+label: 'Galleries External'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

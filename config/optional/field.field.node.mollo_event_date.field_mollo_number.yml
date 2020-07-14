@@ -1,0 +1,23 @@
+uuid: 753b8bff-3228-4e8e-bc89-637bfdd2048f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_number
+    - node.type.mollo_event_date
+id: node.mollo_event_date.field_mollo_number
+field_name: field_mollo_number
+entity_type: node
+bundle: mollo_event_date
+label: mollo_number
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

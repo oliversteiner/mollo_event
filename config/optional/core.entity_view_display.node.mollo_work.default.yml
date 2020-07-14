@@ -1,0 +1,151 @@
+uuid: e3769996-8762-4e25-8ef5-85d45bf78ce1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_work.body
+    - field.field.node.mollo_work.field_mollo_composers
+    - field.field.node.mollo_work.field_mollo_copyright
+    - field.field.node.mollo_work.field_mollo_name
+    - field.field.node.mollo_work.field_mollo_plot
+    - field.field.node.mollo_work.field_mollo_plot_location_time
+    - field.field.node.mollo_work.field_mollo_premiere_date
+    - field.field.node.mollo_work.field_mollo_premiere_note
+    - field.field.node.mollo_work.field_mollo_premiere_place
+    - field.field.node.mollo_work.field_mollo_source_origin
+    - field.field.node.mollo_work.field_mollo_world_premiere_date
+    - field.field.node.mollo_work.field_mollo_world_premiere_note
+    - field.field.node.mollo_work.field_mollo_world_premiere_place
+    - field.field.node.mollo_work.field_mollo_writers
+    - node.type.mollo_work
+  module:
+    - datetime
+    - link
+    - text
+    - user
+id: node.mollo_work.default
+targetEntityType: node
+bundle: mollo_work
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_mollo_composers:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_copyright:
+    weight: 106
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_name:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_plot:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_plot_location_time:
+    weight: 107
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_premiere_date:
+    weight: 115
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_premiere_note:
+    weight: 114
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_premiere_place:
+    weight: 113
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_source_origin:
+    weight: 108
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_mollo_world_premiere_date:
+    weight: 110
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_world_premiere_note:
+    weight: 109
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_world_premiere_place:
+    weight: 111
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_writers:
+    weight: 104
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

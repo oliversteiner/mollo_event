@@ -1,0 +1,307 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_event.body
+    - field.field.node.mollo_event.field_mollo_accent_color
+    - field.field.node.mollo_event.field_mollo_accent_color_dark
+    - field.field.node.mollo_event.field_mollo_accent_color_light
+    - field.field.node.mollo_event.field_mollo_accent_color_text
+    - field.field.node.mollo_event.field_mollo_archive_banner
+    - field.field.node.mollo_event.field_mollo_artist_groups
+    - field.field.node.mollo_event.field_mollo_artists
+    - field.field.node.mollo_event.field_mollo_audio
+    - field.field.node.mollo_event.field_mollo_booking
+    - field.field.node.mollo_event.field_mollo_category
+    - field.field.node.mollo_event.field_mollo_copyright_play
+    - field.field.node.mollo_event.field_mollo_description
+    - field.field.node.mollo_event.field_mollo_files
+    - field.field.node.mollo_event.field_mollo_galleries
+    - field.field.node.mollo_event.field_mollo_galleries_external
+    - field.field.node.mollo_event.field_mollo_locations
+    - field.field.node.mollo_event.field_mollo_media
+    - field.field.node.mollo_event.field_mollo_name
+    - field.field.node.mollo_event.field_mollo_notes
+    - field.field.node.mollo_event.field_mollo_number
+    - field.field.node.mollo_event.field_mollo_plot
+    - field.field.node.mollo_event.field_mollo_press_kit
+    - field.field.node.mollo_event.field_mollo_status
+    - field.field.node.mollo_event.field_mollo_subtitle
+    - field.field.node.mollo_event.field_mollo_title_image
+    - field.field.node.mollo_event.field_mollo_video
+    - field.field.node.mollo_event.field_mollo_website_external
+    - field.field.node.mollo_event.field_mollo_work
+    - field.field.node.mollo_event.field_mollo_year
+    - node.type.mollo_event
+  module:
+    - file
+    - link
+    - text
+    - user
+id: node.mollo_event.default
+targetEntityType: node
+bundle: mollo_event
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_mollo_accent_color:
+    weight: 119
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_accent_color_dark:
+    weight: 120
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_accent_color_light:
+    weight: 121
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_accent_color_text:
+    weight: 122
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_archive_banner:
+    type: entity_reference_entity_view
+    weight: 125
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_artist_groups:
+    weight: 107
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_artists:
+    weight: 106
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_audio:
+    type: entity_reference_entity_view
+    weight: 111
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_booking:
+    weight: 129
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_mollo_category:
+    weight: 108
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_copyright_play:
+    weight: 123
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_description:
+    weight: 104
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_files:
+    weight: 115
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_mollo_galleries:
+    weight: 124
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_galleries_external:
+    weight: 126
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_mollo_locations:
+    weight: 116
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_media:
+    type: entity_reference_entity_view
+    weight: 113
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_name:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_notes:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_number:
+    weight: 117
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_mollo_plot:
+    weight: 128
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_press_kit:
+    weight: 130
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_mollo_status:
+    weight: 110
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_subtitle:
+    weight: 103
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_title_image:
+    type: entity_reference_entity_view
+    weight: 114
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_video:
+    type: entity_reference_entity_view
+    weight: 112
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_website_external:
+    weight: 127
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_mollo_work:
+    weight: 109
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_year:
+    weight: 118
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

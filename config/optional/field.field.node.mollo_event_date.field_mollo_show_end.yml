@@ -1,0 +1,23 @@
+uuid: 4ac152ff-fe70-4af8-aa20-ef72a8f99e16
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_show_end
+    - node.type.mollo_event_date
+id: node.mollo_event_date.field_mollo_show_end
+field_name: field_mollo_show_end
+entity_type: node
+bundle: mollo_event_date
+label: 'Show End Time'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

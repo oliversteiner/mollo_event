@@ -1,0 +1,19 @@
+uuid: aef35139-6ed0-46b9-b4e0-c70a64941ea1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_name
+    - node.type.mollo_location
+id: node.mollo_location.field_mollo_name
+field_name: field_mollo_name
+entity_type: node
+bundle: mollo_location
+label: Name
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: 5b3e92f2-37a5-435d-bccd-395bf559d0cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.mollo_event_date
+  module:
+    - text
+id: node.mollo_event_date.body
+field_name: body
+entity_type: node
+bundle: mollo_event_date
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

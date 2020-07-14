@@ -1,0 +1,17 @@
+uuid: 15171587-332f-4131-80a4-3258b2b79fd0
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Event
+type: mollo_event
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

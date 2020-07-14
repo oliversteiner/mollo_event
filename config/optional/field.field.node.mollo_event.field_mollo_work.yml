@@ -1,0 +1,28 @@
+uuid: 3bf6e1fc-a904-4fb8-b26e-6bcc9980b89e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_work
+    - node.type.mollo_event
+    - node.type.mollo_work
+id: node.mollo_event.field_mollo_work
+field_name: field_mollo_work
+entity_type: node
+bundle: mollo_event
+label: Work
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_work: mollo_work
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: 2622f656-2614-40fc-a944-351907b8a13e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_facebook
+    - node.type.mollo_location
+  module:
+    - link
+id: node.mollo_location.field_mollo_facebook
+field_name: field_mollo_facebook
+entity_type: node
+bundle: mollo_location
+label: Facebook
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

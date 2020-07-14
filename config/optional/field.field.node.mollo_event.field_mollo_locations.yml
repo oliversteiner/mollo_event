@@ -1,0 +1,28 @@
+uuid: 2e8b4443-72f7-4ce0-bb90-e15bc2ecfa89
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_locations
+    - node.type.mollo_event
+    - node.type.mollo_location
+id: node.mollo_event.field_mollo_locations
+field_name: field_mollo_locations
+entity_type: node
+bundle: mollo_event
+label: Locations
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_location: mollo_location
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

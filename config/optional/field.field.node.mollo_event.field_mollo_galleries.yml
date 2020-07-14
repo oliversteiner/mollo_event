@@ -1,0 +1,28 @@
+uuid: 5e0302b7-f20e-4314-a454-33062558c847
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_galleries
+    - node.type.mollo_event
+    - node.type.unig_project
+id: node.mollo_event.field_mollo_galleries
+field_name: field_mollo_galleries
+entity_type: node
+bundle: mollo_event
+label: Galleries
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      unig_project: unig_project
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

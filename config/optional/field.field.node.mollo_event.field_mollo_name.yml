@@ -1,0 +1,19 @@
+uuid: c609145f-ce35-4397-b6ad-b756fc7707fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_name
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_name
+field_name: field_mollo_name
+entity_type: node
+bundle: mollo_event
+label: 'Event Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

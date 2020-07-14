@@ -1,0 +1,23 @@
+uuid: 3e1facf8-1c06-4fe9-84d6-765a43e9c8ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_website_external
+    - node.type.mollo_event
+  module:
+    - link
+id: node.mollo_event.field_mollo_website_external
+field_name: field_mollo_website_external
+entity_type: node
+bundle: mollo_event
+label: 'Website External'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

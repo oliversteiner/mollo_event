@@ -1,0 +1,28 @@
+uuid: fe904aa8-fa5c-4143-b28e-d25e5839450a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_archive_banner
+    - media.type.image
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_archive_banner
+field_name: field_mollo_archive_banner
+entity_type: node
+bundle: mollo_event
+label: 'Archive Banner'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,27 @@
+uuid: 23fc7741-1437-45e0-a4ea-ce472471e1de
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_files
+    - node.type.mollo_event
+  module:
+    - file
+id: node.mollo_event.field_mollo_files
+field_name: field_mollo_files
+entity_type: node
+bundle: mollo_event
+label: Files
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: 'event/[current-page:title]'
+  file_extensions: 'txt pdf word'
+  max_filesize: ''
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

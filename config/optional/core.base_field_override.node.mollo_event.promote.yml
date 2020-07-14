@@ -1,0 +1,22 @@
+uuid: cdb4e958-0f25-46f5-8420-f8e11395b4d2
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_event
+id: node.mollo_event.promote
+field_name: promote
+entity_type: node
+bundle: mollo_event
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

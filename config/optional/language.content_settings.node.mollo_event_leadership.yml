@@ -1,0 +1,11 @@
+uuid: 04b4e2ee-af94-4c43-a0d2-8f8651857150
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_event_leadership
+id: node.mollo_event_leadership
+target_entity_type_id: node
+target_bundle: mollo_event_leadership
+default_langcode: site_default
+language_alterable: false

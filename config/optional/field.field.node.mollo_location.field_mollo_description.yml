@@ -1,0 +1,29 @@
+uuid: 28cec074-abd4-436f-99ba-c0ab895d8d0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_description
+    - node.type.mollo_location
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    full_html: full_html
+    text: '0'
+    html_email: '0'
+    json: '0'
+id: node.mollo_location.field_mollo_description
+field_name: field_mollo_description
+entity_type: node
+bundle: mollo_location
+label: Description
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

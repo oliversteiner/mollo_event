@@ -1,0 +1,29 @@
+uuid: daeb8f68-c53a-4010-9bc0-34c9f12078c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_country
+    - node.type.mollo_location
+    - taxonomy.vocabulary.mollo_country
+id: node.mollo_location.field_mollo_country
+field_name: field_mollo_country
+entity_type: node
+bundle: mollo_location
+label: Country
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      mollo_country: mollo_country
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

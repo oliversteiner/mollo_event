@@ -1,0 +1,29 @@
+uuid: 129ce4f6-2393-4645-a7b7-a9e5603c09bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_subtitle
+    - node.type.mollo_event
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    text: text
+    full_html: full_html
+    html_email: '0'
+    json: '0'
+id: node.mollo_event.field_mollo_subtitle
+field_name: field_mollo_subtitle
+entity_type: node
+bundle: mollo_event
+label: Subtitle
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
