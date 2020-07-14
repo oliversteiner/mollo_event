@@ -1,0 +1,45 @@
+#
+# View Events
+#
+mollo_event.list:
+  path: '/admin/event/list'
+  defaults:
+    _title: 'Events'
+  requirements:
+    _permission: 'administer content'
+#
+# View Works
+#
+mollo_event.work.list:
+  path: '/admin/work/list'
+  defaults:
+    _title: 'Works'
+  requirements:
+    _permission: 'administer content'
+#
+# View Locations
+#
+mollo_event.location.list:
+  path: '/admin/location/list'
+  defaults:
+    _title: 'Locations'
+  requirements:
+    _permission: 'administer content'
+#
+# View Dates
+#
+mollo_event.date.list:
+  path: '/admin/event-date/list'
+  defaults:
+    _title: 'Dates'
+  requirements:
+    _permission: 'administer content'
+#
+# View Dates
+#
+mollo_event.leadership.list:
+  path: '/admin/leadership/list'
+  defaults:
+    _title: 'Leaderships'
+  requirements:
+    _permission: 'administer content'
