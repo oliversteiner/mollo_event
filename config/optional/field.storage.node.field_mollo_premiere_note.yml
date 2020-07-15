@@ -1,0 +1,19 @@
+uuid: 634aa8da-bdb9-4177-a85f-d7d523af78fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_mollo_premiere_note
+field_name: field_mollo_premiere_note
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

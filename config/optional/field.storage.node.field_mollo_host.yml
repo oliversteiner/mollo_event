@@ -1,0 +1,19 @@
+uuid: 6525e11e-374d-45a6-ac96-3c3919ed3522
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_mollo_host
+field_name: field_mollo_host
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

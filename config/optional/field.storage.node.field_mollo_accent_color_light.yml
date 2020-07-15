@@ -1,0 +1,21 @@
+uuid: f0bb54b3-d881-485b-b13b-42440c7d9fcc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_mollo_accent_color_light
+field_name: field_mollo_accent_color_light
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

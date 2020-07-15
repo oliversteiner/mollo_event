@@ -1,0 +1,18 @@
+uuid: 45676429-82ee-48d9-abdb-5576306f0ffb
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_mollo_is_active
+field_name: field_mollo_is_active
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

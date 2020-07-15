@@ -1,0 +1,20 @@
+uuid: 7aa62c33-90bc-42d2-85e9-189fd3688996
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_mollo_function
+field_name: field_mollo_function
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
