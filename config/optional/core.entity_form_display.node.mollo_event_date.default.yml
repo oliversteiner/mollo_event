@@ -1,8 +1,10 @@
+uuid: a7cd7386-4584-4f26-9777-5a69c6b4138c
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.node.mollo_event_date.body
+    - field.field.node.mollo_event_date.field_mollo_description
     - field.field.node.mollo_event_date.field_mollo_director
     - field.field.node.mollo_event_date.field_mollo_door_opening
     - field.field.node.mollo_event_date.field_mollo_end
@@ -14,7 +16,6 @@ dependencies:
     - field.field.node.mollo_event_date.field_mollo_show_start
     - field.field.node.mollo_event_date.field_mollo_start
     - field.field.node.mollo_event_date.field_mollo_status
-    - field.field.node.mollo_event_date.field_mollo_description
     - node.type.mollo_event_date
   module:
     - datetime
@@ -41,6 +42,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_mollo_description:
+    weight: 134
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
   field_mollo_director:
     weight: 129
     settings:
@@ -127,14 +136,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
-    region: content
-  field_mollo_description:
-    weight: 131
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
     region: content
   langcode:
     type: language_select
