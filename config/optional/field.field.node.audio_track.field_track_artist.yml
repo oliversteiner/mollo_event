@@ -1,16 +1,16 @@
-uuid: 7cdc8e28-a94f-48a2-aaa3-cb404b13465c
+uuid: 27401ce8-07da-429d-bb4a-0a00ff250bf0
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_mollo_category
-    - node.type.mollo_event
-    - taxonomy.vocabulary.mollo_event_category
-id: node.mollo_event.field_mollo_category
-field_name: field_mollo_category
+    - field.storage.node.field_track_artist
+    - node.type.audio_track
+    - taxonomy.vocabulary.track_artist
+id: node.audio_track.field_track_artist
+field_name: field_track_artist
 entity_type: node
-bundle: mollo_event
-label: Category
+bundle: audio_track
+label: 'Track Artist'
 description: ''
 required: false
 translatable: false
@@ -20,10 +20,10 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      mollo_event_category: mollo_event_category
+      track_artist: track_artist
     sort:
       field: name
       direction: asc
-    auto_create: false
+    auto_create: true
     auto_create_bundle: ''
 field_type: entity_reference

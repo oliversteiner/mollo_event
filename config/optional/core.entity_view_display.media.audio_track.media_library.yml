@@ -1,0 +1,31 @@
+uuid: 6b0f54a1-3e00-4590-8c44-0452b9d55bd5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.audio_track.field_media_audio_file
+    - image.style.medium
+    - media.type.audio_track
+  module:
+    - image
+id: media.audio_track.media_library
+targetEntityType: media
+bundle: audio_track
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_audio_file: true
+  langcode: true
+  name: true
+  uid: true

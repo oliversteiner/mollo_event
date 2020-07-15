@@ -1,0 +1,22 @@
+uuid: 16d285e2-c01a-436f-84ec-d7fba2f5e768
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.video_remote
+id: media.video_remote.status
+field_name: status
+entity_type: media
+bundle: video_remote
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
