@@ -1,0 +1,29 @@
+uuid: 84cade1c-8c09-4bb5-9ace-3193fc6b7d47
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_artist
+    - node.type.mollo_artist
+    - node.type.mollo_role
+id: node.mollo_role.field_mollo_artist
+field_name: field_mollo_artist
+entity_type: node
+bundle: mollo_role
+label: Artist
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_artist: mollo_artist
+    sort:
+      field: field_mollo_last_name
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

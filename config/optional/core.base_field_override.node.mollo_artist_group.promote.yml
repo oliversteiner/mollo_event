@@ -1,0 +1,22 @@
+uuid: 3e10167f-6ada-4d22-bd8c-0dfa7cdf4471
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_artist_group
+id: node.mollo_artist_group.promote
+field_name: promote
+entity_type: node
+bundle: mollo_artist_group
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

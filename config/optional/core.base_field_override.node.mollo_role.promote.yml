@@ -1,0 +1,22 @@
+uuid: 8e87adda-0736-43a3-bcdd-391a211a1936
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_role
+id: node.mollo_role.promote
+field_name: promote
+entity_type: node
+bundle: mollo_role
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

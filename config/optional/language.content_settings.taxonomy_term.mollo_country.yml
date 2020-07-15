@@ -1,0 +1,16 @@
+uuid: 316ccadb-c615-4390-914b-edce39694b25
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.mollo_country
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: taxonomy_term.mollo_country
+target_entity_type_id: taxonomy_term
+target_bundle: mollo_country
+default_langcode: site_default
+language_alterable: false

@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 name: Function
 vid: mollo_function
-description: ''
+description: Mollo
 weight: 0

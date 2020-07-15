@@ -1,0 +1,14 @@
+uuid: 4f31d668-dc77-436d-bdf3-7369abcbdae8
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.mollo_editor
+  module:
+    - user
+id: user_add_role_action.mollo_editor
+label: 'Add the Mollo Editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: mollo_editor

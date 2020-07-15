@@ -1,0 +1,23 @@
+uuid: ade72590-f47d-4f05-a824-36a50a88ce44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_links
+    - node.type.mollo_artist
+  module:
+    - link
+id: node.mollo_artist.field_mollo_links
+field_name: field_mollo_links
+entity_type: node
+bundle: mollo_artist
+label: Links
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

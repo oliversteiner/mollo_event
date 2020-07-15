@@ -10,7 +10,7 @@ third_party_settings:
     parent: ''
 name: Work
 type: mollo_work
-description: ''
+description: Mollo
 help: ''
 new_revision: true
 preview_mode: 0

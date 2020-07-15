@@ -1,0 +1,22 @@
+uuid: 51aacf61-93d9-4eba-810e-f70f41f56133
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_video_remote
+id: media.mollo_video_remote.status
+field_name: status
+entity_type: media
+bundle: mollo_video_remote
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

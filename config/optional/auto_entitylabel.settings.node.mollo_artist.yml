@@ -1,0 +1,7 @@
+status: 1
+pattern: '[node:field_mollo_first_name] [node:field_mollo_last_name]'
+php: 0
+escape: false
+dependencies:
+  config:
+    - node.type.mollo_artist

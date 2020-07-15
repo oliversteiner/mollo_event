@@ -1,0 +1,82 @@
+uuid: efbd8876-f687-4af7-be6b-f1b51af0cbdf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_artist_group.body
+    - field.field.node.mollo_artist_group.field_mollo_artists
+    - field.field.node.mollo_artist_group.field_mollo_description
+    - field.field.node.mollo_artist_group.field_mollo_event
+    - field.field.node.mollo_artist_group.field_mollo_media
+    - field.field.node.mollo_artist_group.field_mollo_name
+    - field.field.node.mollo_artist_group.field_mollo_title_image
+    - node.type.mollo_artist_group
+  module:
+    - text
+    - user
+id: node.mollo_artist_group.default
+targetEntityType: node
+bundle: mollo_artist_group
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_mollo_artists:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_description:
+    weight: 104
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_mollo_event:
+    weight: 107
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_media:
+    weight: 106
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_mollo_name:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_mollo_title_image:
+    weight: 105
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

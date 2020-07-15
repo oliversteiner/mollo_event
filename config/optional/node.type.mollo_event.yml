@@ -10,7 +10,7 @@ third_party_settings:
     parent: ''
 name: Event
 type: mollo_event
-description: ''
+description: Mollo
 help: ''
 new_revision: true
 preview_mode: 1

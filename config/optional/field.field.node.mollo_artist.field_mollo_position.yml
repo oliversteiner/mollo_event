@@ -1,0 +1,29 @@
+uuid: 9cf70c19-1425-4c65-9d3c-e5b6831f425e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_position
+    - node.type.mollo_artist
+    - taxonomy.vocabulary.mollo_position
+id: node.mollo_artist.field_mollo_position
+field_name: field_mollo_position
+entity_type: node
+bundle: mollo_artist
+label: Position
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      mollo_position: mollo_position
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

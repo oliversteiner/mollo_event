@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 name: 'Event Category'
 vid: mollo_event_category
-description: ''
+description: Mollo
 weight: 0

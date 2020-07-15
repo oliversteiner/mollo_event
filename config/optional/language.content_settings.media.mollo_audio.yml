@@ -1,0 +1,11 @@
+uuid: 2efe47ff-51b0-4fc1-a1a3-54e354b2183e
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_audio
+id: media.mollo_audio
+target_entity_type_id: media
+target_bundle: mollo_audio
+default_langcode: site_default
+language_alterable: false

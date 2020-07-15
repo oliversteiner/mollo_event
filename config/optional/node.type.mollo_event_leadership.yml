@@ -10,7 +10,7 @@ third_party_settings:
     parent: ''
 name: 'Event Leadership'
 type: mollo_event_leadership
-description: ''
+description: Mollo
 help: ''
 new_revision: false
 preview_mode: 0

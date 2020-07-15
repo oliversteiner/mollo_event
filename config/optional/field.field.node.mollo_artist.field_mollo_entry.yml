@@ -1,0 +1,21 @@
+uuid: e78cabb3-2c21-479c-a318-caeeef6d8db1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_entry
+    - node.type.mollo_artist
+  module:
+    - datetime
+id: node.mollo_artist.field_mollo_entry
+field_name: field_mollo_entry
+entity_type: node
+bundle: mollo_artist
+label: 'Entry Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

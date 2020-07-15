@@ -1,0 +1,16 @@
+uuid: 0af1dbdc-c443-4867-a5f8-ab2537366f83
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.mollo_speciality
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: taxonomy_term.mollo_speciality
+target_entity_type_id: taxonomy_term
+target_bundle: mollo_speciality
+default_langcode: site_default
+language_alterable: false

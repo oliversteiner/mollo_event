@@ -1,0 +1,8 @@
+uuid: 036bd37b-d769-4b7f-bec8-6f91bc542854
+langcode: und
+status: true
+dependencies: {  }
+name: Speciality
+vid: mollo_speciality
+description: Mollo
+weight: 0

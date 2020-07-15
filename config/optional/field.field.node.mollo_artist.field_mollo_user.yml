@@ -1,0 +1,29 @@
+uuid: 8bcd980a-4872-4683-9947-94b3bc29c39f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_user
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_user
+field_name: field_mollo_user
+entity_type: node
+bundle: mollo_artist
+label: User
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

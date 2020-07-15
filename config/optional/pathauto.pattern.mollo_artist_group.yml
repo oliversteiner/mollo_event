@@ -1,0 +1,22 @@
+uuid: 9d5975c1-b691-45f1-a684-d75fb4584616
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: mollo_artist_group
+label: 'Mollo Artist Group'
+type: 'canonical_entities:node'
+pattern: '/group/[node:field_mollo_name]'
+selection_criteria:
+  ba8eb817-62e8-4513-9c17-496e7a35295a:
+    id: node_type
+    bundles:
+      mollo_artist_group: mollo_artist_group
+    negate: false
+    context_mapping:
+      node: node
+    uuid: ba8eb817-62e8-4513-9c17-496e7a35295a
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.mollo_work.field_mollo_premiere_note
     - field.field.node.mollo_work.field_mollo_premiere_place
     - field.field.node.mollo_work.field_mollo_source_origin
+    - field.field.node.mollo_work.field_mollo_title_image
     - field.field.node.mollo_work.field_mollo_world_premiere_date
     - field.field.node.mollo_work.field_mollo_world_premiere_note
     - field.field.node.mollo_work.field_mollo_world_premiere_place
@@ -50,6 +51,7 @@ hidden:
   field_mollo_premiere_note: true
   field_mollo_premiere_place: true
   field_mollo_source_origin: true
+  field_mollo_title_image: true
   field_mollo_world_premiere_date: true
   field_mollo_world_premiere_note: true
   field_mollo_world_premiere_place: true

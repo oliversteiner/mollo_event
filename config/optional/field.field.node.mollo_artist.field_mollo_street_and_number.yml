@@ -1,0 +1,19 @@
+uuid: 7410ee01-3adf-49ac-b996-d4ada0c554a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_street_and_number
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_street_and_number
+field_name: field_mollo_street_and_number
+entity_type: node
+bundle: mollo_artist
+label: 'Street and Number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

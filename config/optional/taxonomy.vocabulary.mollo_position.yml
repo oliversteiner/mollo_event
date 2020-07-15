@@ -1,0 +1,8 @@
+uuid: 17152c49-dcd0-4fca-8e97-9659620f3520
+langcode: und
+status: true
+dependencies: {  }
+name: Position
+vid: mollo_position
+description: Mollo
+weight: 0

@@ -1,0 +1,28 @@
+uuid: 5537672d-9804-4d91-a76b-73d319ee1013
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.mollo_video_remote.field_media_oembed_video
+    - media.type.mollo_video_remote
+id: media.mollo_video_remote.media_library
+targetEntityType: media
+bundle: mollo_video_remote
+mode: media_library
+content:
+  name:
+    type: string_textfield
+    settings:
+      size: 60
+      placeholder: ''
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_oembed_video: true
+  langcode: true
+  path: true
+  status: true
+  uid: true

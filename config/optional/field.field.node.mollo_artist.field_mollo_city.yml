@@ -1,0 +1,19 @@
+uuid: 8f0ea739-bc0c-489c-96a5-a6c72493eed0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_city
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_city
+field_name: field_mollo_city
+entity_type: node
+bundle: mollo_artist
+label: City
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,3 +1,4 @@
+uuid: 8af6518e-bff3-432b-ac31-eb3d94ece3b4
 langcode: en
 status: true
 dependencies:
@@ -260,7 +261,7 @@ content:
     region: content
   field_mollo_video:
     type: entity_reference_entity_view
-    weight: 112
+    weight: 131
     label: above
     settings:
       view_mode: default

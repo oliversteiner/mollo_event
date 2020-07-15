@@ -229,7 +229,7 @@ content:
     region: content
   field_mollo_video:
     type: media_library_widget
-    weight: 10
+    weight: 39
     settings:
       media_types: {  }
     third_party_settings: {  }

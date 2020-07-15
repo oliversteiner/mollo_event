@@ -1,0 +1,8 @@
+uuid: 314e1a00-ede7-46c7-865f-c83ce62472c0
+langcode: und
+status: true
+dependencies: {  }
+name: Instrument
+vid: mollo_instrument
+description: Mollo
+weight: 0

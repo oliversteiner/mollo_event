@@ -1,0 +1,22 @@
+uuid: 4252dd77-0910-4c85-a93a-fdc3d4d48053
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_video
+id: media.mollo_video.status
+field_name: status
+entity_type: media
+bundle: mollo_video
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

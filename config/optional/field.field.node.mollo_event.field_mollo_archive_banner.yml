@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_mollo_archive_banner
-    - media.type.image
+    - media.type.mollo_image
     - node.type.mollo_event
 id: node.mollo_event.field_mollo_archive_banner
 field_name: field_mollo_archive_banner
@@ -20,9 +20,9 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      image: image
+      mollo_image: mollo_image
     sort:
       field: _none
-    auto_create: false
-    auto_create_bundle: ''
+    auto_create: true
+    auto_create_bundle: image
 field_type: entity_reference

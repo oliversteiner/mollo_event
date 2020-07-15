@@ -1,0 +1,31 @@
+uuid: e37b7d37-d5c7-4713-81a6-075cb40bab7d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.mollo_audio.field_media_audio_file
+    - image.style.medium
+    - media.type.mollo_audio
+  module:
+    - image
+id: media.mollo_audio.media_library
+targetEntityType: media
+bundle: mollo_audio
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_audio_file: true
+  langcode: true
+  name: true
+  uid: true

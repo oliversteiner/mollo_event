@@ -1,0 +1,29 @@
+uuid: b8be961e-f78f-4dac-a556-6abe0bb6a857
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.mollo_video_remote.field_media_oembed_video
+    - media.type.mollo_video_remote
+  module:
+    - media
+id: media.mollo_video_remote.default
+targetEntityType: media
+bundle: mollo_video_remote
+mode: default
+content:
+  field_media_oembed_video:
+    type: oembed
+    label: visually_hidden
+    weight: 0
+    settings:
+      max_width: 0
+      max_height: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

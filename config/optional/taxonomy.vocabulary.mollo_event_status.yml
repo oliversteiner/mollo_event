@@ -4,5 +4,5 @@ status: true
 dependencies: {  }
 name: 'Event Status'
 vid: mollo_event_status
-description: ''
+description: Mollo
 weight: 0

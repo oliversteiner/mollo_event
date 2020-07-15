@@ -4,8 +4,9 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_mollo_media
-    - media.type.image
-    - media.type.video_remote
+    - media.type.mollo_image
+    - media.type.mollo_video
+    - media.type.mollo_video_remote
     - node.type.mollo_location
 id: node.mollo_location.field_mollo_media
 field_name: field_mollo_media
@@ -21,10 +22,11 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      image: image
-      video_remote: video_remote
+      mollo_image: mollo_image
+      mollo_video: mollo_video
+      mollo_video_remote: mollo_video_remote
     sort:
       field: _none
     auto_create: true
-    auto_create_bundle: image
+    auto_create_bundle: mollo_image
 field_type: entity_reference

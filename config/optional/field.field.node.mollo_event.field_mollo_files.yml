@@ -19,7 +19,7 @@ default_value: {  }
 default_value_callback: ''
 settings:
   file_directory: 'event/[current-page:title]'
-  file_extensions: 'txt pdf word'
+  file_extensions: 'txt pdf doc docx zip'
   max_filesize: ''
   description_field: true
   handler: 'default:file'

@@ -1,0 +1,27 @@
+uuid: 72405b67-d90a-41c1-9b06-2ee628d12eb6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_audio_file
+    - media.type.mollo_video
+  module:
+    - file
+id: media.mollo_video.field_media_audio_file
+field_name: field_media_audio_file
+entity_type: media
+bundle: mollo_video
+label: 'Video file'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_extensions: mp4
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

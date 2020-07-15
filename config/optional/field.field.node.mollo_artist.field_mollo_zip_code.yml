@@ -1,0 +1,23 @@
+uuid: cf9bd180-f17a-4960-afce-81f8c10fcc5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_zip_code
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_zip_code
+field_name: field_mollo_zip_code
+entity_type: node
+bundle: mollo_artist
+label: 'Zip Code'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

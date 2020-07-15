@@ -1,0 +1,16 @@
+uuid: f473d0d4-de37-4800-a209-8ed769976b4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.mollo_voice_position
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: taxonomy_term.mollo_voice_position
+target_entity_type_id: taxonomy_term
+target_bundle: mollo_voice_position
+default_langcode: site_default
+language_alterable: false

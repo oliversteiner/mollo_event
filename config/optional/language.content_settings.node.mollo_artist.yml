@@ -1,0 +1,11 @@
+uuid: 6d939fec-dd9f-44a1-bc7c-c40f50e57f1c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_artist
+id: node.mollo_artist
+target_entity_type_id: node
+target_bundle: mollo_artist
+default_langcode: site_default
+language_alterable: false
