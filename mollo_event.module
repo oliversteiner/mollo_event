@@ -6,12 +6,14 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\mollo_utils\Utility\Helper;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_help().
  */
-function mollo_event_help($route_name, RouteMatchInterface $route_match)
-{
+function mollo_event_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the mollo_event module.
     case 'help.page.mollo_event':
@@ -27,8 +29,7 @@ function mollo_event_help($route_name, RouteMatchInterface $route_match)
 /**
  * Implements hook_theme().
  */
-function mollo_event_theme()
-{
+function mollo_event_theme() {
   return [
     'mollo_event' => [
       'render element' => 'children',
@@ -37,19 +38,16 @@ function mollo_event_theme()
 }
 
 
-function mollo_event_form_alter(&$form, &$form_state, $form_id)
-{
+function mollo_event_form_alter(&$form, &$form_state, $form_id) {
 
-  // Show Menu with Names on List Filter
-  // - role
-  // -
-  // -
   if ($form['#id'] === 'views-exposed-form-event-dates-admin-list' ||
     $form['#id'] === 'views-exposed-form-roles-admin-list' ||
     $form['#id'] === 'views-exposed-form-leadership-admin-list'
   ) {
 
-    $nids = \Drupal::entityQuery('node')->condition('type', 'mollo_event')->execute();
+    $nids = \Drupal::entityQuery('node')
+      ->condition('type', 'mollo_event')
+      ->execute();
     $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
     $options = ['' => 'All'];
 
@@ -67,4 +65,1025 @@ function mollo_event_form_alter(&$form, &$form_state, $form_id)
       $form['event']['#size'] = 1;
     }
   }
+}
+
+function preprocess_mollo_event(&$variables) {
+  //  nid
+  $node = Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof NodeInterface) {
+    $event_id = $node->id();
+
+
+    $work_id = $node->get('field_mollo_work')->getValue();
+    $work_id = $work_id[0]['target_id'];
+
+    $event_number = $node->get('field_mollo_number')->getValue();
+    $event_number = $event_number[0]['value'];
+
+
+    // get Year
+    //  $operette_allgemein = preloadVars($event_id);
+
+
+    // get mw_operette NID
+    // get Komponist via operette_detail
+    //  $variables['operette'] = getOperette($work_id);
+
+    // get Komponist via operette_detail
+    //  $variables['composers'] = getComposers($work_id);
+
+    // get Work Variables
+    $variables['work'] = getWorkVariables($work_id);
+
+
+    // get mitwirkende
+    //  $variables['kreativ_team'] = buildMitwirkende($event_id, 'Kreativ Team', $work_id, $operette_allgemein);
+    //  $variables['solisten'] = buildMitwirkende($event_id, 'Solist', $work_id, $operette_allgemein);
+    //  $variables['chor'] = buildMitwirkende($event_id, 'Chor', $work_id, $operette_allgemein);
+    //  $variables['kinder_chor'] = buildMitwirkende($event_id, 'Kinderchor', $work_id, $operette_allgemein);
+    //  $variables['orchester'] = buildMitwirkende($event_id, 'Orchester', $work_id, $operette_allgemein);
+    //  $variables['leitung'] = buildLeitung($event_id, $operette_allgemein);
+
+    // UNIG
+    // $variables['galleries'] = buildGalerie($node);
+
+    // Aufführungen
+    //  $variables['events'] = buildEvents($event_id);
+    //   $variables['chronik_banner'] = buildBanner($node);
+
+    // accent-color
+    //   $variables['accent_color'] = buildAccentColor($node);
+
+  }
+
+
+}
+
+/**
+ * @param $nid
+ * @param $funktion
+ *
+ * @return array
+ */
+function buildMitwirkende($nid, $funktion, $work_id, $operetten_allgemein) {
+  $variables = [];
+
+
+  // Allgemein
+  $funktion_terms = $operetten_allgemein['funktion_terms'];
+  $funktion_tids = $operetten_allgemein['funktion_tids'];
+
+  $funktion_kreativteam_terms = $operetten_allgemein['funktion_kreativteam_terms'];
+  $funktion_kreativteam_tids = $operetten_allgemein['funktion_kreativteam_tids'];
+
+
+  $stimmlage_terms = $operetten_allgemein['stimmlage_terms'];
+  $stimmlage_tids = $operetten_allgemein['stimmlage_tids'];
+
+  $instrumente_terms = $operetten_allgemein['instrumente_terms'];
+  $instrumente_tids = $operetten_allgemein['instrumente_tids'];
+
+  $rollen = $operetten_allgemein['rollen'];
+  $auffuehrungen = $operetten_allgemein['auffuehrungen'];
+  $kreativ_team = $operetten_allgemein['kreativ_team'];
+
+  $gruppenfotos = $operetten_allgemein['gruppenfotos'];
+  $variables['gruppenfotos'] = $gruppenfotos;
+
+
+  //
+
+  $tid_kreativ_team = $funktion_terms['Kreativ Team'];
+  $i = 1;
+
+
+  // ==========   Load all mitwirkende
+
+  // load all Nids from "mitwirkende" for this Operette
+  $query = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('status', 1)
+    ->condition('type', 'mitwirkende')
+    ->condition('field_mollo_event_1en', $nid)
+    ->condition('field_funktion', $funktion_terms[$funktion])
+    //
+    // Order by
+    // ->sort('weight', 'ASC')
+    //
+    // Access
+    ->accessCheck(FALSE);
+
+
+  $nids = $query->execute();
+
+
+  // if  Nids are found for this operette
+  if (count($nids) !== 0) {
+
+    // Load all Mitwirkende
+    foreach ($nids as $_nid) {
+
+
+      // Output Array
+      $variables[$i] = [];
+
+      $node = Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->load($_nid);
+
+      if ($node) {
+
+        // nid
+        $variables[$i]['nid'] = $_nid;
+
+        // vorname
+        if (!$node->field_vorname->isEmpty()) {
+          $value = $node->field_vorname->getValue();
+          $variables[$i]['vorname'] = $value[0]['value'];
+        }
+
+        // nachname
+        if (!$node->field_nachname->isEmpty()) {
+          $value = $node->field_nachname->getValue();
+          if (!empty($value[0]['value'])) {
+            $variables[$i]['nachname'] = $value[0]['value'];
+          }
+        }
+
+        // stimmlage
+        if (!$node->field_stimmlage->isEmpty()) {
+          $value = $node->field_stimmlage->getValue();
+          if (!empty($value[0]['target_id'])) {
+            $tid = $value[0]['target_id'];
+            $stimmlage = $stimmlage_tids[$tid];
+            $variables[$i]['stimmlage'] = $stimmlage;
+            $variables[$i]['stimmlage_tid'] = $tid;
+          }
+
+        }
+
+
+        // instrumente
+        if (!$node->field_instrument->isEmpty()) {
+          $value = $node->field_instrument->getValue();
+          if (!empty($value[0]['target_id'])) {
+            $tid = $value[0]['target_id'];
+            $instrument = $instrumente_tids[$tid];
+            $variables[$i]['instrument'] = $instrument;
+            $variables[$i]['instrument_tid'] = $tid;
+          }
+
+        }
+
+        // Funktion
+        $funktion_text = [];
+        if (!$node->field_funktion->isEmpty()) {
+          $values = $node->field_funktion->getValue();
+          $tids = [];
+
+          foreach ($values as $value) {
+            if (!empty($value['target_id'])) {
+              $tid = $value['target_id'];
+              $tids[] = $tid;
+              if (($tid !== $tid_kreativ_team) && isset($funktion_tids[$tid])) {
+                $elem = $funktion_tids[$tid];
+                $funktion_text[] = $elem;
+              }
+            }
+          }
+          $variables[$i]['funktion'] = implode(' / ', $funktion_text);
+          $variables[$i]['funktion_tids'] = $tids;
+
+        }
+
+
+        // Auffuehrungen
+        if (!$node->field_mollo_event_1en->isEmpty()) {
+          $values = $node->field_mollo_event_1en->getValue();
+
+          $mitwirkende_auffuehrungen = [];
+          foreach ($values as $value) {
+            if (!empty($value['target_id'])) {
+              $tid = $value['target_id'];
+              $mitwirkende_auffuehrungen[] = $auffuehrungen[$tid]['jahr'] . ' - ' . $auffuehrungen[$tid]['name'];
+            }
+          }
+          $variables[$i]['auffuehrungen'] = $mitwirkende_auffuehrungen;
+        }
+
+
+        // Solisten Rolle
+        if (isset($rollen[$_nid])) {
+
+          $variables[$i]['rollenname'] = $rollen[$_nid]['rollenname'];
+          $variables[$i]['rollenbeschreibung'] = $rollen[$_nid]['rollenbeschreibung'];
+
+        }
+        else {
+          $variables[$i]['rollenname'] = '';
+          $variables[$i]['rollenbeschreibung'] = '';
+        }
+
+
+        // Kreativ Team
+        if (isset($kreativ_team[$_nid])) {
+
+          $funktion_text = implode(' / ', $kreativ_team[$_nid]['names']);
+          $variables[$i]['funktion'] = $funktion_text;
+
+        }
+
+
+        // body
+        if (!$node->body->isEmpty()) {
+          $value = $node->body->getValue();
+          if (isset($value[0])) {
+            $variables[$i]['body'] = $value[0];
+          }
+        }
+
+        // field_image
+        if (!$node->field_image->isEmpty()) {
+          $value = $node->field_image;
+          if (isset($value[0])) {
+            $variables[$i]['images'] = getImages($value);
+          }
+        }
+
+
+      }
+
+      // increment output array
+      $i++;
+    }
+
+  }
+  else {
+    Drupal::messenger()->addMessage('niemand gefunden- ' . $funktion);
+  }
+
+
+  // Only Chor
+  if ($funktion === 'Chor') {
+
+    $chor = [];
+
+    // get variables array, rearrange for chor
+
+    foreach ($variables as $chor_member) {
+      if (!empty($chor_member['stimmlage'])) {
+        $stimmlage = $chor_member['stimmlage'];
+
+        $chor[$stimmlage]['mitwirkende'][] = $chor_member;
+        $chor[$stimmlage]['name'] = $stimmlage;
+
+
+        $tid = $chor_member['stimmlage_tid'];
+        if (!empty($gruppenfotos)) {
+          $chor[$stimmlage]['images'] = $gruppenfotos[$tid];
+        }
+
+        // Image
+        if (!empty($chor_member['images'])) {
+          $images = $chor_member['images'];
+          $chor[$stimmlage]['images'] = $images;
+
+        }
+      }
+
+      $variables = $chor;
+    }
+  }
+
+  // Only Chor
+  if ($funktion === 'Kinderchor') {
+
+    $kinderchor = [];
+
+    // get variables array, rearrange for $kinderchor
+    foreach ($variables as $mitwirkender) {
+
+      if (!empty($mitwirkender['funktion_tids'])) {
+        $tid = $mitwirkender['funktion_tids'][0];
+
+        $kinderchor['mitwirkende'][] = $mitwirkender;
+        $kinderchor['images'] = $gruppenfotos[$tid];
+        $variables = $kinderchor;
+
+      }
+
+
+    }
+  }
+
+  // Only Orchester
+  if ($funktion === 'Orchester') {
+
+    $orchester = [];
+
+    // get variables array, rearange for chor
+
+    foreach ($variables as $orchester_member) {
+      if (!empty($orchester_member['instrument'])) {
+        $instrument = $orchester_member['instrument'];
+        $orchester[$instrument]['musiker'][] = $orchester_member;
+        $orchester[$instrument]['name'] = $instrument;
+      }
+    }
+    $variables = $orchester;
+  }
+
+
+  // Default
+  return $variables;
+
+
+}
+
+/**
+ *
+ * Get all Information from Work and Names from Composers and Writers
+ *
+ *  Bundle mollo_work
+ * -----------------------------------------
+ *    - field_mollo_composers
+ *    - field_mollo_plot
+ *    - field_mollo_name
+ *    - field_mollo_plot_location_time
+ *    - field_mollo_premiere_date
+ *    - field_mollo_premiere_place
+ *    - field_mollo_premiere_note
+ *    - field_mollo_copyright
+ *    - field_mollo_source_origin
+ *    - field_mollo_world_premiere_date
+ *    - field_mollo_world_premiere_place
+ *    - field_mollo_world_premiere_note
+ *    - field_mollo_writers
+ *
+ *
+ * @param $work_id
+ *
+ * @return array
+ */
+function getWorkVariables($work_id) {
+
+  // load mollo_work ID from mollo_event
+  // load mollo_artists from mollo_work
+
+  $variables = [
+    'plot' => '',
+    'name' => '',
+    'plot_location_time' => '',
+    'premiere_date' => '',
+    'premiere_place' => '',
+    'premiere_note' => '',
+    'copyright' => '',
+    'source_origin' => '',
+    'world_premiere_date' => '',
+    'world_premiere_place' => '',
+    'world_premiere_note' => '',
+    'composers' => '',
+    'writers' => '',
+  ];
+
+  $node = Node::load($work_id);
+
+  if (isset($node)) {
+
+    $plot = Helper::getFieldValue($node, 'field_mollo_plot');
+    $name = Helper::getFieldValue($node, 'field_mollo_name');
+    $plot_location_time = Helper::getFieldValue($node, 'field_mollo_plot_location_time');
+    $premiere_date = Helper::getFieldValue($node, 'field_mollo_premiere_date');
+    $premiere_place = Helper::getFieldValue($node, 'field_mollo_premiere_place');
+    $premiere_note = Helper::getFieldValue($node, 'field_mollo_premiere_note');
+    $copyright = Helper::getFieldValue($node, 'field_mollo_copyright');
+    $source_origin = Helper::getFieldValue($node, 'field_mollo_source_origin');
+    $world_premiere_date = Helper::getFieldValue($node, 'field_mollo_world_premiere_date');
+    $world_premiere_place = Helper::getFieldValue($node, 'field_mollo_world_premiere_place');
+    $world_premiere_note = Helper::getFieldValue($node, 'field_mollo_world_premiere_note');
+    $composers_ids = Helper::getFieldValue($node, 'field_mollo_composers', NULL, TRUE);
+    $writers_ids = Helper::getFieldValue($node, 'field_mollo_writers', NULL, TRUE);
+
+    // Composer
+    $composers = [];
+    if ($composers_ids !== 0) {
+      foreach ($composers_ids as $composers_id) {
+        $composers[] = getArtist($composers_id);
+      }
+    }
+
+
+    // Writer
+    $writers = [];
+    if ($writers_ids !== 0) {
+      foreach ($writers_ids as $writers_id) {
+        $writers[] = getArtist($writers_id);
+      }
+    }
+
+
+    $variables = [
+      'plot' => $plot,
+      'name' => $name,
+      'plot_location_time' => $plot_location_time,
+      'premiere_date' => $premiere_date,
+      'premiere_place' => $premiere_place,
+      'premiere_note' => $premiere_note,
+      'copyright' => $copyright,
+      'source_origin' => $source_origin,
+      'world_premiere_date' => $world_premiere_date,
+      'world_premiere_place' => $world_premiere_place,
+      'world_premiere_note' => $world_premiere_note,
+      'composers' => $composers,
+      'writers' => $writers,
+    ];
+  }
+
+
+  return $variables;
+}
+
+/**
+ * @param $id
+ *
+ *
+ *  Bundle mollo_artist
+ * -----------------------------------------
+ *     - field_mollo_artist_groups
+ *     - field_mollo_birthday
+ *     - field_mollo_city
+ *     - field_mollo_email
+ *     - field_mollo_entry
+ *     - field_mollo_event
+ *     - field_mollo_facebook
+ *     - field_mollo_first_name
+ *     - field_mollo_function
+ *     - field_mollo_hystoric
+ *     - field_mollo_instrument
+ *     - field_mollo_is_active
+ *     - field_mollo_last_name
+ *     - field_mollo_links
+ *     - field_mollo_media
+ *     - field_mollo_mobile
+ *     - field_mollo_phone
+ *     - field_mollo_position
+ *     - field_mollo_resigning
+ *     - field_mollo_speciality
+ *     - field_mollo_street_and_number
+ *     - field_mollo_title_image
+ *     - field_mollo_token
+ *     - field_mollo_user
+ *     - field_mollo_voice_position
+ *     - field_mollo_wikipedia
+ *     - field_mollo_zip_code
+ *
+ *
+ * @return string[]
+ */
+function getArtist($id) {
+  $node = Node::load($id);
+
+
+
+  if (isset($node)) {
+    $first_name = Helper::getFieldValue($node, 'field_mollo_first_name');
+    $last_name  = Helper::getFieldValue($node, 'field_mollo_last_name');
+    $voice_position   = Helper::getFieldValue($node, 'field_mollo_voice_position');
+    $function   = Helper::getFieldValue($node, 'field_mollo_function');
+    $instrument = Helper::getFieldValue($node, 'field_mollo_instrument');
+    $position   = Helper::getFieldValue($node, 'field_mollo_position');
+    $speciality = Helper::getFieldValue($node, 'field_mollo_speciality');
+    $title_image = Helper::getFieldValue($node, 'field_mollo_title_image');
+
+
+    return [
+      'id' => $id,
+      'first_name' =>     $first_name,
+      'last_name' =>     $last_name,
+      'function' =>     $function,
+      'voice_position' =>     $voice_position,
+      'instrument' =>     $instrument,
+      'position' =>     $position,
+      'speciality' =>     $speciality,
+      'image' =>     $title_image,
+    ];
+
+  }
+
+
+
+  return [];
+}
+
+function getOperette($nid) {
+
+  $node = FALSE;
+  $variables = [
+    'titel' => '',
+    'image' => '',
+
+    'handlung' => [
+      'text' => '',
+      'ort_und_zeit' => '',
+    ],
+
+    'urauffuehrung' => [
+      'origin' => [
+        'ort' => '',
+        'datum' => '',
+        'bemerkung' => '',
+      ],
+      'moeriken' => [
+        'ort' => '',
+        'datum' => '',
+        'bemerkung' => '',
+      ],
+
+    ],
+    'wikipedia' => '',
+    'quellen_link' => '',
+    'copyright_text' => '',
+
+  ];
+
+  $node = Node::load($nid);
+
+
+  if ($node) {
+
+    // titel
+
+    $variables['titel'] = $node->label();
+
+
+    // Handlung Ort und Zeit
+    if (!$node->field_handlung_ort_und_zeit->isEmpty()) {
+      $value = $node->field_handlung_ort_und_zeit->getValue();
+      if (isset($value[0])) {
+        $variables['handlung']['ort_und_zeit'] = $value[0]['value'];
+      }
+    }
+
+
+    // Handlung Text
+    if (!$node->body->isEmpty()) {
+      $value = $node->body->getValue();
+      if (isset($value[0])) {
+        $variables['handlung']['text'] = $value[0];
+      }
+    }
+
+    // field_image
+    if (isset($node->field_image) && !$node->field_image->isEmpty()) {
+      $value = $node->field_image;
+      if (isset($value[0])) {
+        $variables['image'] = getImages($value);
+      }
+    }
+
+    // === Uraufführung
+
+    // Ort
+    if (!$node->field_urauffuehrung_ort->isEmpty()) {
+      $value = $node->field_urauffuehrung_ort->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['origin']['ort'] = $value[0]['value'];
+      }
+    }
+
+    // Datum
+    if (!$node->field_urauffuehrung_datum->isEmpty()) {
+      $value = $node->field_urauffuehrung_datum->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['origin']['datum'] = $value[0]['value'];
+      }
+    }
+
+    // Bemerkung
+    if (!$node->field_urauffuehrung_bemerkung->isEmpty()) {
+      $value = $node->field_urauffuehrung_bemerkung->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['origin']['bemerkung'] = $value[0]['value'];
+      }
+    }
+
+    // === Uraufführung Möriken
+
+    // Ort
+    if (!$node->field_urauffuehrung_moeriken_ort->isEmpty()) {
+      $value = $node->field_urauffuehrung_moeriken_ort->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['moeriken']['ort'] = $value[0]['value'];
+      }
+    }
+
+    // Datum
+    if (!$node->field_urauffuehrung_moeriken_dat->isEmpty()) {
+      $value = $node->field_urauffuehrung_moeriken_dat->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['moeriken']['datum'] = $value[0]['value'];
+      }
+    }
+
+    // Bemerkung
+    if (!$node->field_urauffuehrung_moeriken_bem->isEmpty()) {
+      $value = $node->field_urauffuehrung_moeriken_bem->getValue();
+      if (isset($value[0])) {
+        $variables['urauffuehrung']['moeriken']['bemerkung'] = $value[0]['value'];
+      }
+    }
+
+    // wikipedia
+    if (!$node->field_wikipedia->isEmpty()) {
+      $value = $node->field_wikipedia->getValue();
+      if (isset($value[0])) {
+        $variables['wikipedia'] = $value[0];
+      }
+    }
+
+    // quellen_link
+    if (!$node->field_quellen_link->isEmpty()) {
+      $value = $node->field_quellen_link->getValue();
+      if (isset($value[0])) {
+        $variables['quellen_link'] = $value[0];
+      }
+    }
+
+    // copyright_text
+    if (!$node->field_copyright_text->isEmpty()) {
+      $value = $node->field_copyright_text->getValue();
+      if (isset($value[0])) {
+        $variables['copyright_text'] = $value[0]['value'];
+      }
+    }
+
+  }
+
+
+  return $variables;
+}
+
+function buildEvents($event_id) {
+
+  $variables = [];
+  $nids_flatten = [];
+
+  // load all Nids from "mitwirkende" for this Operette
+  $query = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('status', 1)
+    ->condition('type', 'events')
+    ->condition('field_mollo_event_1', $event_id)
+    //
+    // Order by
+    ->sort('field_datum', 'ASC')
+    //
+    // Access
+    ->accessCheck(FALSE);
+
+
+  $nids = $query->execute();
+  foreach ($nids as $nid) {
+    $nids_flatten[] = $nid;
+  }
+
+
+  $count = count($nids_flatten);
+  $variables['anzahl'] = $count;
+  $nid_first = reset($nids_flatten);
+  $nid_last = end($nids_flatten);
+  // Premiere
+  if ($nid_first) {
+    $node = NODE::load($nid_first);
+    if (isset($node->field_datum) && !$node->field_datum->isEmpty()) {
+      $value = $node->field_datum->getValue();
+      if (isset($value[0])) {
+        $variables['premiere'] = $value[0]['value'];
+      }
+    }
+  }
+  // Derniere
+  if ($node && $nid_last) {
+    $node = NODE::load($nid_last);
+    if (isset($node->field_datum) && !$node->field_datum->isEmpty()) {
+      $value = $node->field_datum->getValue();
+      if (isset($value[0])) {
+        $variables['derniere'] = $value[0]['value'];
+      }
+    }
+  }
+
+  return $variables;
+
+}
+
+function buildBanner($node) {
+  $variables = [];
+
+  if (isset($node->get('field_chronik_banner')->entity)) {
+
+    $list_image_styles = Drupal::entityQuery('image_style')->execute();
+
+    foreach ($list_image_styles as $image_style) {
+      if ($image_style === 'chronik_banner_small' ||
+        $image_style === 'chronik_banner_medium' ||
+        $image_style === 'chronik_banner_large') {
+
+        $style = ImageStyle::load($image_style);
+
+        $name = str_replace("chronik_banner_", "", $image_style);
+
+        $variables[$name] = $style->buildUrl($node->get('field_chronik_banner')->entity->getFileUri()); // Generates file url.
+
+      }
+    }
+
+
+  }
+  return $variables;
+}
+
+function buildAccentColor($node) {
+  // Default-Color: Operette Möriken Red
+  $variables['default'] = "#6E1226";
+  $variables['text'] = "#6E1226";
+  $variables['light'] = "#e7dfdf";
+  $variables['dark'] = "#31020c";
+
+
+  // Default
+  if (!$node->field_accent_color->isEmpty()) {
+    $value = $node->field_accent_color->getValue();
+    if (!empty($value[0])) {
+      $variables['default'] = $value[0]['value'];
+    }
+  }
+
+  // Default
+  if (!$node->field_accent_color_text->isEmpty()) {
+    $value = $node->field_accent_color_text->getValue();
+    if (!empty($value[0])) {
+      $variables['text'] = $value[0]['value'];
+    }
+  }
+
+  // Light
+  if (!$node->field_accent_color_light->isEmpty()) {
+    $value = $node->field_accent_color_light->getValue();
+    if (!empty($value[0])) {
+      $variables['light'] = $value[0]['value'];
+    }
+  }
+
+  // Dark
+  if (!$node->field_accent_color_dark->isEmpty()) {
+    $value = $node->field_accent_color_dark->getValue();
+    if (!empty($value[0])) {
+      $variables['dark'] = $value[0]['value'];
+    }
+  }
+
+  return $variables;
+}
+
+function preloadVars($event_id) {
+
+  $funktion_terms = [];
+  $funktion_tids = [];
+
+  $funktion_kreativteam_terms = [];
+  $funktion_kreativteam_tids = [];
+
+
+  $stimmlage_terms = [];
+  $stimmlage_tids = [];
+
+  $instrumente_terms = [];
+  $instrumente_tids = [];
+
+  $rollen = [];
+  $auffuehrungen = [];
+  $kreativ_team = [];
+
+  $gruppenfotos = [];
+
+
+  // Load taxonomy "funktion"
+  $vid = 'mollo_function';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $funktion_terms[$term->name] = $term->tid;
+    $funktion_tids[$term->tid] = $term->name;
+
+  }
+
+
+  // Load taxonomy "funktion Kreativ Team"
+  $vid = 'mollo_position';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $funktion_kreativteam_terms[$term->name] = $term->tid;
+    $funktion_kreativteam_tids[$term->tid] = $term->name;
+
+  }
+
+  // Load taxonomy "stimmlage"
+  $vid = 'mollo_voice_position';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $stimmlage_terms[$term->name] = $term->tid;
+    $stimmlage_tids[$term->tid] = $term->name;
+  }
+
+
+  // Load taxonomy "instrumente"
+  $vid = 'mollo_instrument';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $instrumente_terms[$term->name] = $term->tid;
+    $instrumente_tids[$term->tid] = $term->name;
+  }
+
+
+  // ==========   Load all Auffuehrungen
+  /*
+    $query_auffuehrungen = Drupal::entityQuery('node')
+      //
+      // Condition
+      ->condition('type', 'operette')
+      ->accessCheck(FALSE);
+
+
+    $nids_auffuehrungen = $query_auffuehrungen->execute();
+    $nodes_auffuehrungen = Node::loadMultiple($nids_auffuehrungen);
+
+    foreach ($nodes_auffuehrungen as $node_auffuehrung) {
+      $auffuehrung_jahr = '';
+
+
+      // Get Name
+      $auffuehrung_name = $node_auffuehrung->label();
+      $auffuehrung_nid = $node_auffuehrung->id();
+
+
+      // Get Year
+      if (!$node_auffuehrung->field_jahr->isEmpty()) {
+        $value = $node_auffuehrung->field_jahr->getValue();
+        if (!empty($value[0]['value'])) {
+
+          $auffuehrung_jahr = $value[0]['value'];
+        }
+      }
+      $auffuehrungen[$auffuehrung_nid]['name'] = $auffuehrung_name;
+      $auffuehrungen[$auffuehrung_nid]['jahr'] = $auffuehrung_jahr;
+    }*/
+
+
+  // ==========   Load all Roles
+
+  $query_rollen = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('type', 'rolle')
+    ->condition('field_mollo_event_1', $event_id)
+    ->accessCheck(FALSE);
+
+
+  $nids_rollen = $query_rollen->execute();
+  $nodes_rollen = Node::loadMultiple($nids_rollen);
+
+  foreach ($nodes_rollen as $node_rolle) {
+    $rollenname = '';
+    $rollenbeschreibung = '';
+
+    // Get all Rollenname
+    if (!$node_rolle->field_rollenname->isEmpty()) {
+      $value = $node_rolle->field_rollenname->getValue();
+      if (!empty($value[0]['value'])) {
+        $rollenname = $value[0]['value'];
+      }
+    }
+
+    // Get all Rollenbeschreibung
+    if (!$node_rolle->field_rollenbeschreibung->isEmpty()) {
+      $value = $node_rolle->field_rollenbeschreibung->getValue();
+      if (!empty($value[0]['value'])) {
+
+        $rollenbeschreibung = $value[0]['value'];
+      }
+    }
+
+    // List all IDs from Mitwirkende and add its corresponding Rollenname
+    if (!$node_rolle->field_mitwirkender->isEmpty()) {
+      $values = $node_rolle->field_mitwirkender->getValue();
+
+      foreach ($values as $value) {
+        $mitwirkender_id = $value['target_id'];
+        $rollen[$mitwirkender_id]['rollenname'] = $rollenname;
+        $rollen[$mitwirkender_id]['rollenbeschreibung'] = $rollenbeschreibung;
+      }
+    }
+
+
+  }
+
+
+  // ==========   Load all Kreativ Team
+
+  $query_kreativ_team = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('type', 'kreativteam')
+    ->condition('field_mollo_event_1', $event_id)
+    ->accessCheck(FALSE);
+
+
+  $nids_kreativ_team = $query_kreativ_team->execute();
+  $nodes_kreativ_team = Node::loadMultiple($nids_kreativ_team);
+
+  foreach ($nodes_kreativ_team as $node_kreativ_team) {
+
+    // Funktion
+    $kreativ_team_function_tids = [];
+    $kreativ_team_function_names = [];
+
+
+    // load all Functions
+    if (!$node_kreativ_team->field_kreativ_team_funktion->isEmpty()) {
+      $values = $node_kreativ_team->field_kreativ_team_funktion->getValue();
+
+      foreach ($values as $value) {
+        $funktion_id = $value['target_id'];
+        $kreativ_team_function_tids[] = $funktion_id;
+        $kreativ_team_function_names[] = $funktion_kreativteam_tids[$funktion_id];
+      }
+    }
+
+
+    // List all IDs from Mitwirkende and add its corresponding Rollenname
+    if (!$node_kreativ_team->field_mitwirkender->isEmpty()) {
+      $values = $node_kreativ_team->field_mitwirkender->getValue();
+
+      foreach ($values as $value) {
+        $mitwirkender_id = $value['target_id'];
+        $kreativ_team[$mitwirkender_id]['tids'] = $kreativ_team_function_tids;
+        $kreativ_team[$mitwirkender_id]['names'] = $kreativ_team_function_names;
+      }
+    }
+  }
+
+
+  $vars = [
+    'funktion_terms' => $funktion_terms,
+    'funktion_tids' => $funktion_tids,
+    'funktion_kreativteam_terms' => $funktion_kreativteam_terms,
+    'funktion_kreativteam_tids' => $funktion_kreativteam_tids,
+    'stimmlage_terms' => $stimmlage_terms,
+    'stimmlage_tids' => $stimmlage_tids,
+    'instrumente_terms' => $instrumente_terms,
+    'instrumente_tids' => $instrumente_tids,
+    'rollen' => $rollen,
+    'auffuehrungen' => $auffuehrungen,
+    'kreativ_team' => $kreativ_team,
+    'gruppenfotos' => $gruppenfotos,
+  ];
+
+  return $vars;
+
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * @param $variables
+ */
+function mollo_event_preprocess_node(&$variables) {
+
+  $current_user = Drupal::currentUser();
+  $user_roles = $current_user->getRoles();
+
+  $admin_users = ['administrator', 'editor'];
+  $node_type = $variables['node']->getType();
+
+
+  switch ($node_type) {
+
+    case "mollo_event":
+      preprocess_mollo_event($variables);
+      break;
+
+  }
+
+
 }
