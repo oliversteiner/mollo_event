@@ -44,21 +44,24 @@ function mollo_event_theme() {
 function mollo_event_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form['#id'] === 'views-exposed-form-event-dates-admin-list' ||
-    $form['#id'] === 'views-exposed-form-roles-admin-list' ||
-    $form['#id'] === 'views-exposed-form-leadership-admin-list'
+    $form['#id'] === 'views-exposed-form-roles-admin-list'
+//    || $form['#id'] === 'views-exposed-form-mollo-artist-roles-admin-list'
+
   ) {
 
     $nids = \Drupal::entityQuery('node')
       ->condition('type', 'mollo_event')
       ->execute();
-    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
-    $options = ['' => 'All'];
+    $nodes = Node::loadMultiple($nids);
+    $options = ['' => '-- Alle --']; // TODO Add Translation
 
     foreach ($nodes as $nid => $node) {
       $value = $node->get('field_mollo_name')->getString();
 
       if (isset($value)) {
         $options[$value] = $value;
+    //    $options_solo[$nid] = $value;
+
       }
     }
 
@@ -67,7 +70,9 @@ function mollo_event_form_alter(&$form, &$form_state, $form_id) {
       $form['event']['#options'] = $options;
       $form['event']['#size'] = 1;
     }
+
   }
+
 }
 
 function preprocess_mollo_event(&$variables) {
@@ -92,7 +97,7 @@ function preprocess_mollo_event(&$variables) {
     $variables['musicians'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'musician');
     $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
     $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
-
+    $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);
 
   }
 
