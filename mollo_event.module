@@ -91,6 +91,7 @@ function preprocess_mollo_event(&$variables) {
     $variables['work'] = WorkController::getVars($work_id, $vocabularies);
     $variables['musicians'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'musician');
     $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
+    $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
 
 
   }

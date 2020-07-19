@@ -5,7 +5,6 @@ namespace Drupal\mollo_event\Controller;
 use Drupal;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\mollo_utils\Utility\Helper;
-use Drupal\node\Entity\Node;
 
 /**
  * Class ArtistController.
@@ -39,7 +38,7 @@ class ArtistController extends ControllerBase {
 
   public $function;
 
-  public $hystoric;
+  public $historic;
 
   public $instrument;
 
@@ -75,6 +74,12 @@ class ArtistController extends ControllerBase {
 
   public $zip_code;
 
+  public $role_name;
+
+  public $role_group;
+
+  public $role_description;
+
   /**
    * Getvars.
    *
@@ -88,7 +93,7 @@ class ArtistController extends ControllerBase {
    *    - field_mollo_is_active ( boolean )
    *    - field_mollo_entry
    *    - field_mollo_resigning
-   *    - field_mollo_hystoric  ( boolean ) TODO: Rename Field to historic
+   *    - field_mollo_historic  ( boolean )
    *    - field_mollo_artist_groups
    *
    *   Images
@@ -133,7 +138,7 @@ class ArtistController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getVars($artist_id, $vocabularies): array {
+  public static function getVars($artist_id): array {
     $node = Drupal::entityTypeManager()
       ->getStorage('node')
       ->load($artist_id);
@@ -203,6 +208,51 @@ class ArtistController extends ControllerBase {
   }
 
   /**
+   * getRoleVars.
+   *
+   *    Bundle mollo_role
+   * -----------------------------------------
+   *
+   *   General
+   *    - field_mollo_artist    ( Entity: mollo_artist )
+   *    - field_mollo_event_1   ( Entity: mollo_event )
+   *    - field_mollo_event     ( Do not use )
+   *    - field_mollo_description ( text long, formatted)
+   *    - field_mollo_name      ( text )
+   *
+   *
+   *
+   * @param $role_id
+   *
+   * @return array|string[]
+   *   Return Artist Twig Vars
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function getRoleVars($role_id): array {
+    $node = Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->load($role_id);
+
+    if (isset($node)) {
+      // Get Field Values
+      $name = Helper::getFieldValue($node, 'field_mollo_name');
+      $artist_id = Helper::getFieldValue($node, 'field_mollo_artist');
+      $description = Helper::getFieldValue($node, 'field_mollo_description');
+
+      // Build Variables Array
+      return [
+        'id' => $role_id,
+        'name' => $name,
+        'description' => $description,
+        'artist_id' => $artist_id,
+      ];
+    }
+
+    return [];
+  }
+
+  /**
    * @param $event_id
    * @param $vocabularies
    *
@@ -236,9 +286,6 @@ class ArtistController extends ControllerBase {
     return $all_artists;
   }
 
-
-
-
   /**
    *
    *
@@ -271,7 +318,7 @@ class ArtistController extends ControllerBase {
     // Build Twig Array from Vocabularies
     $terms = [];
     foreach ($vocabularies[$vocabulary] as $term_id => $term_name) {
-      $artists_filtered = artistFilter(
+      $artists_filtered = self::artistFilter(
         $term_name,
         $vocabulary,
         $needle,
@@ -289,40 +336,111 @@ class ArtistController extends ControllerBase {
     return $terms;
   }
 
-}
+  /**
+   *
+   *
+   * @param $term_name
+   * @param $vocabulary
+   * @param $needle
+   * @param $artists
+   *
+   * @return array
+   */
+  public static function artistFilter(
+    $term_name,
+    $vocabulary,
+    $needle,
+    $artists
+  ): array {
+    $results = [];
+    $ids = [];
+    foreach ($artists as $artist) {
+      foreach ($artist['function'] as $function) {
+        // Needle in Function (Choir, Orchestra, Leadership)
+        if (in_array($needle, $artist['function'], TRUE)) {
+          // term in Voc ( Voice Position, Instruments
+          if (in_array($term_name, $artist[$vocabulary], TRUE)) {
+            // Eliminate duplicates
+            if (!in_array($artist['id'], $ids, TRUE)) {
+              $ids[] = $artist['id'];
 
-/**
- *
- *
- * @param $term_name
- * @param $vocabulary
- * @param $needle
- * @param $artists
- *
- * @return array
- */
-function artistFilter($term_name, $vocabulary, $needle, $artists) {
-  $results = [];
-  $ids = [];
-  foreach ($artists as $artist) {
-    foreach ($artist['function'] as $function) {
-
-      // Needle in Function (Choir, Orchestra, Leadership)
-      if (in_array($needle, $artist['function'], TRUE)) {
-
-        // term in Voc ( Voice Position, Instruments
-        if (in_array($term_name, $artist[$vocabulary], TRUE)) {
-
-          // Eliminate duplicates
-          if (!in_array($artist['id'], $ids, TRUE)) {
-            $ids[] = $artist['id'];
-
-            // Add filterd Artist to Result
-            $results[] = $artist;
+              // Add filterd Artist to Result
+              $results[] = $artist;
+            }
           }
         }
       }
     }
+    return $results;
   }
-  return $results;
+
+  public static function getSoloArtist(
+    $event_id,
+    array $artists,
+    array $vocabularies
+  ) {
+    $solo_artists = [];
+    $solo_artists_temp = [];
+    $roles = [];
+
+    // get all Roles for Event
+    $query = Drupal::entityQuery('node')
+      //
+      // Condition
+      ->condition('type', 'mollo_role')
+      ->condition('field_mollo_event_1', $event_id)
+      // Access
+      ->accessCheck(FALSE);
+
+    $role_ids = $query->execute();
+
+    // Nodes found
+    if (count($role_ids) !== 0) {
+      // Load all Artists
+      foreach ($role_ids as $role_id) {
+        // Output Array
+        $roles[] = self::getRoleVars($role_id);
+      }
+    }
+
+    // Add Artist to Roles
+    foreach ($roles as $role) {
+      // Search in Artist
+      foreach ($artists as $artist) {
+        // Find Artist for Role
+        if ($artist['id'] === $role['artist_id']) {
+          // Add Role-Vars to Artist
+          $artist['role_id'] = $role['id'];
+          $artist['role_name'] = $role['name'];
+          $artist['role_description'] = $role['description'];
+
+          // Store Artist in Solo Artists
+          // Group Artists by Roles ( like Soldaten, Zofen, Grissetten)
+          $role_group = $role['name'];
+          $solo_artists_temp[$role_group][] = $artist;
+        }
+      }
+    }
+
+    // Postprocessing
+    // Add role_group 'solo' for Solo Artists
+    $i = 0;
+    foreach ($solo_artists_temp as $role_group) {
+      $solo_artists[0]['name'] = 'solo';
+
+      if (count($role_group) === 1) {
+        $solo_artists[0]['artists'][] = $role_group[0];
+      }
+      else {
+        foreach ($role_group as $artist) {
+          $solo_artists[$i]['name'] = $artist['role_name'];
+          $solo_artists[$i]['artists'][] = $artist;
+        }
+      }
+      $i++;
+    }
+
+    return $solo_artists;
+  }
+
 }
