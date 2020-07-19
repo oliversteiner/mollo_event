@@ -45,10 +45,10 @@ mollo_event.leadership.list:
     _permission: 'administer content'
 
 
-mollo_event.artist_controller_getVars:
+mollo_event.preload_controller_getVars:
   path: '/mollo_event/getVars'
   defaults:
-    _controller: '\Drupal\mollo_event\Controller\ArtistController::getVars'
+    _controller: '\Drupal\mollo_event\Controller\PreloadController::getVars'
     _title: 'getVars'
   requirements:
     _permission: 'access content'

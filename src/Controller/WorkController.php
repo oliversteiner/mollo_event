@@ -7,6 +7,7 @@ use Drupal\mollo_utils\Utility\Helper;
 use Drupal\node\Entity\Node;
 
 /**
+ * Class WorkController
  *
  * Get all Information from Work and Names from Composers and Writers
  *
@@ -70,12 +71,15 @@ class WorkController extends ControllerBase
    *
    * @param $work_id
    *
-   * @return array|string[] Return Hello string.
-   *   Return Hello string.
+   * @param $vocabularies
+   *
+   * @return array|string[]
+   *   Return Work Twig Vars
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getVars($work_id): array
+  public static function getVars($work_id, $vocabularies): array
   {
     $variables = [
       'plot' => '',
@@ -97,9 +101,6 @@ class WorkController extends ControllerBase
 
 
     if (isset($node)) {
-
-
-
 
       // Get Field Content
       $plot = Helper::getFieldValue($node, 'field_mollo_plot');
@@ -154,7 +155,7 @@ class WorkController extends ControllerBase
       $composers = [];
       if ($composers_ids !== 0) {
         foreach ($composers_ids as $composers_id) {
-          $composers[] = getArtist($composers_id);
+          $composers[] = ArtistController::getVars($composers_id, $vocabularies);
         }
       }
 
@@ -162,7 +163,7 @@ class WorkController extends ControllerBase
       $writers = [];
       if ($writers_ids !== 0) {
         foreach ($writers_ids as $writers_id) {
-          $writers[] = getArtist($writers_id);
+          $writers[] = ArtistController::getVars($writers_id, $vocabularies);
         }
       }
 

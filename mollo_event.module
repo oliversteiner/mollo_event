@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\mollo_event\Controller\ArtistController;
+use Drupal\mollo_event\Controller\PreloadController;
 use Drupal\mollo_event\Controller\WorkController;
 use Drupal\mollo_utils\Utility\Helper;
 use Drupal\node\Entity\Node;
@@ -81,20 +83,13 @@ function preprocess_mollo_event(&$variables) {
     $event_number = $node->get('field_mollo_number')->getValue();
     $event_number = $event_number[0]['value'];
 
-
-    // get Year
     //  $operette_allgemein = preloadVars($event_id);
 
-
-    // get mw_operette NID
-    // get Komponist via operette_detail
-    //  $variables['operette'] = getOperette($work_id);
-
-    // get Komponist via operette_detail
-    //  $variables['composers'] = getComposers($work_id);
+    $vocabularies = PreloadController::getVars();
 
     // get Work Variables
-    $variables['work'] = WorkController::getVars($work_id);
+    $variables['work'] = WorkController::getVars($work_id, $vocabularies);
+    $variables['artists'] = ArtistController::getAllFromEvent($work_id, $vocabularies);
 
 
     // get mitwirkende
@@ -120,512 +115,6 @@ function preprocess_mollo_event(&$variables) {
 
 }
 
-/**
- * @param $nid
- * @param $funktion
- *
- * @return array
- */
-function buildMitwirkende($nid, $funktion, $work_id, $operetten_allgemein) {
-  $variables = [];
-
-
-  // Allgemein
-  $funktion_terms = $operetten_allgemein['funktion_terms'];
-  $funktion_tids = $operetten_allgemein['funktion_tids'];
-
-  $funktion_kreativteam_terms = $operetten_allgemein['funktion_kreativteam_terms'];
-  $funktion_kreativteam_tids = $operetten_allgemein['funktion_kreativteam_tids'];
-
-
-  $stimmlage_terms = $operetten_allgemein['stimmlage_terms'];
-  $stimmlage_tids = $operetten_allgemein['stimmlage_tids'];
-
-  $instrumente_terms = $operetten_allgemein['instrumente_terms'];
-  $instrumente_tids = $operetten_allgemein['instrumente_tids'];
-
-  $rollen = $operetten_allgemein['rollen'];
-  $auffuehrungen = $operetten_allgemein['auffuehrungen'];
-  $kreativ_team = $operetten_allgemein['kreativ_team'];
-
-  $gruppenfotos = $operetten_allgemein['gruppenfotos'];
-  $variables['gruppenfotos'] = $gruppenfotos;
-
-
-  //
-
-  $tid_kreativ_team = $funktion_terms['Kreativ Team'];
-  $i = 1;
-
-
-  // ==========   Load all mitwirkende
-
-  // load all Nids from "mitwirkende" for this Operette
-  $query = Drupal::entityQuery('node')
-    //
-    // Condition
-    ->condition('status', 1)
-    ->condition('type', 'mitwirkende')
-    ->condition('field_mollo_event_1en', $nid)
-    ->condition('field_funktion', $funktion_terms[$funktion])
-    //
-    // Order by
-    // ->sort('weight', 'ASC')
-    //
-    // Access
-    ->accessCheck(FALSE);
-
-
-  $nids = $query->execute();
-
-
-  // if  Nids are found for this operette
-  if (count($nids) !== 0) {
-
-    // Load all Mitwirkende
-    foreach ($nids as $_nid) {
-
-
-      // Output Array
-      $variables[$i] = [];
-
-      $node = Drupal::entityTypeManager()
-        ->getStorage('node')
-        ->load($_nid);
-
-      if ($node) {
-
-        // nid
-        $variables[$i]['nid'] = $_nid;
-
-        // vorname
-        if (!$node->field_vorname->isEmpty()) {
-          $value = $node->field_vorname->getValue();
-          $variables[$i]['vorname'] = $value[0]['value'];
-        }
-
-        // nachname
-        if (!$node->field_nachname->isEmpty()) {
-          $value = $node->field_nachname->getValue();
-          if (!empty($value[0]['value'])) {
-            $variables[$i]['nachname'] = $value[0]['value'];
-          }
-        }
-
-        // stimmlage
-        if (!$node->field_stimmlage->isEmpty()) {
-          $value = $node->field_stimmlage->getValue();
-          if (!empty($value[0]['target_id'])) {
-            $tid = $value[0]['target_id'];
-            $stimmlage = $stimmlage_tids[$tid];
-            $variables[$i]['stimmlage'] = $stimmlage;
-            $variables[$i]['stimmlage_tid'] = $tid;
-          }
-
-        }
-
-
-        // instrumente
-        if (!$node->field_instrument->isEmpty()) {
-          $value = $node->field_instrument->getValue();
-          if (!empty($value[0]['target_id'])) {
-            $tid = $value[0]['target_id'];
-            $instrument = $instrumente_tids[$tid];
-            $variables[$i]['instrument'] = $instrument;
-            $variables[$i]['instrument_tid'] = $tid;
-          }
-
-        }
-
-        // Funktion
-        $funktion_text = [];
-        if (!$node->field_funktion->isEmpty()) {
-          $values = $node->field_funktion->getValue();
-          $tids = [];
-
-          foreach ($values as $value) {
-            if (!empty($value['target_id'])) {
-              $tid = $value['target_id'];
-              $tids[] = $tid;
-              if (($tid !== $tid_kreativ_team) && isset($funktion_tids[$tid])) {
-                $elem = $funktion_tids[$tid];
-                $funktion_text[] = $elem;
-              }
-            }
-          }
-          $variables[$i]['funktion'] = implode(' / ', $funktion_text);
-          $variables[$i]['funktion_tids'] = $tids;
-
-        }
-
-
-        // Auffuehrungen
-        if (!$node->field_mollo_event_1en->isEmpty()) {
-          $values = $node->field_mollo_event_1en->getValue();
-
-          $mitwirkende_auffuehrungen = [];
-          foreach ($values as $value) {
-            if (!empty($value['target_id'])) {
-              $tid = $value['target_id'];
-              $mitwirkende_auffuehrungen[] = $auffuehrungen[$tid]['jahr'] . ' - ' . $auffuehrungen[$tid]['name'];
-            }
-          }
-          $variables[$i]['auffuehrungen'] = $mitwirkende_auffuehrungen;
-        }
-
-
-        // Solisten Rolle
-        if (isset($rollen[$_nid])) {
-
-          $variables[$i]['rollenname'] = $rollen[$_nid]['rollenname'];
-          $variables[$i]['rollenbeschreibung'] = $rollen[$_nid]['rollenbeschreibung'];
-
-        }
-        else {
-          $variables[$i]['rollenname'] = '';
-          $variables[$i]['rollenbeschreibung'] = '';
-        }
-
-
-        // Kreativ Team
-        if (isset($kreativ_team[$_nid])) {
-
-          $funktion_text = implode(' / ', $kreativ_team[$_nid]['names']);
-          $variables[$i]['funktion'] = $funktion_text;
-
-        }
-
-
-        // body
-        if (!$node->body->isEmpty()) {
-          $value = $node->body->getValue();
-          if (isset($value[0])) {
-            $variables[$i]['body'] = $value[0];
-          }
-        }
-
-        // field_image
-        if (!$node->field_image->isEmpty()) {
-          $value = $node->field_image;
-          if (isset($value[0])) {
-            $variables[$i]['images'] = getImages($value);
-          }
-        }
-
-
-      }
-
-      // increment output array
-      $i++;
-    }
-
-  }
-  else {
-    Drupal::messenger()->addMessage('niemand gefunden- ' . $funktion);
-  }
-
-
-  // Only Chor
-  if ($funktion === 'Chor') {
-
-    $chor = [];
-
-    // get variables array, rearrange for chor
-
-    foreach ($variables as $chor_member) {
-      if (!empty($chor_member['stimmlage'])) {
-        $stimmlage = $chor_member['stimmlage'];
-
-        $chor[$stimmlage]['mitwirkende'][] = $chor_member;
-        $chor[$stimmlage]['name'] = $stimmlage;
-
-
-        $tid = $chor_member['stimmlage_tid'];
-        if (!empty($gruppenfotos)) {
-          $chor[$stimmlage]['images'] = $gruppenfotos[$tid];
-        }
-
-        // Image
-        if (!empty($chor_member['images'])) {
-          $images = $chor_member['images'];
-          $chor[$stimmlage]['images'] = $images;
-
-        }
-      }
-
-      $variables = $chor;
-    }
-  }
-
-  // Only Chor
-  if ($funktion === 'Kinderchor') {
-
-    $kinderchor = [];
-
-    // get variables array, rearrange for $kinderchor
-    foreach ($variables as $mitwirkender) {
-
-      if (!empty($mitwirkender['funktion_tids'])) {
-        $tid = $mitwirkender['funktion_tids'][0];
-
-        $kinderchor['mitwirkende'][] = $mitwirkender;
-        $kinderchor['images'] = $gruppenfotos[$tid];
-        $variables = $kinderchor;
-
-      }
-
-
-    }
-  }
-
-  // Only Orchester
-  if ($funktion === 'Orchester') {
-
-    $orchester = [];
-
-    // get variables array, rearange for chor
-
-    foreach ($variables as $orchester_member) {
-      if (!empty($orchester_member['instrument'])) {
-        $instrument = $orchester_member['instrument'];
-        $orchester[$instrument]['musiker'][] = $orchester_member;
-        $orchester[$instrument]['name'] = $instrument;
-      }
-    }
-    $variables = $orchester;
-  }
-
-
-  // Default
-  return $variables;
-
-
-}
-
-
-/**
- * @param $id
- *
- *
- *  Bundle mollo_artist
- * -----------------------------------------
- *     - field_mollo_artist_groups
- *     - field_mollo_birthday
- *     - field_mollo_city
- *     - field_mollo_email
- *     - field_mollo_entry
- *     - field_mollo_event
- *     - field_mollo_facebook
- *     - field_mollo_first_name
- *     - field_mollo_function
- *     - field_mollo_hystoric
- *     - field_mollo_instrument
- *     - field_mollo_is_active
- *     - field_mollo_last_name
- *     - field_mollo_links
- *     - field_mollo_media
- *     - field_mollo_mobile
- *     - field_mollo_phone
- *     - field_mollo_position
- *     - field_mollo_resigning
- *     - field_mollo_speciality
- *     - field_mollo_street_and_number
- *     - field_mollo_title_image
- *     - field_mollo_token
- *     - field_mollo_user
- *     - field_mollo_voice_position
- *     - field_mollo_wikipedia
- *     - field_mollo_zip_code
- *
- *
- * @return string[]
- */
-function getArtist($id) {
-  $node = Node::load($id);
-
-
-  if (isset($node)) {
-
-    // Get Field Values
-    $first_name = Helper::getFieldValue($node, 'field_mollo_first_name');
-    $last_name = Helper::getFieldValue($node, 'field_mollo_last_name');
-
-    // Get only IDs
-    $title_image = Helper::getFieldValue($node, 'field_mollo_title_image');
-
-    // Get Taxonomy Content TODO: Preload Taxonomy Data
-    $voice_position = Helper::getFieldValue($node, 'field_mollo_voice_position');
-    $function = Helper::getFieldValue($node, 'field_mollo_function');
-    $instrument = Helper::getFieldValue($node, 'field_mollo_instrument');
-    $position = Helper::getFieldValue($node, 'field_mollo_position');
-    $speciality = Helper::getFieldValue($node, 'field_mollo_speciality');
-
-    // Build Variables Array
-    return [
-      'id' => $id,
-      'first_name' => $first_name,
-      'last_name' => $last_name,
-      'function' => $function,
-      'voice_position' => $voice_position,
-      'instrument' => $instrument,
-      'position' => $position,
-      'speciality' => $speciality,
-      'image' => $title_image,
-    ];
-
-  }
-
-
-  return [];
-}
-
-function getOperette($nid) {
-
-  $node = FALSE;
-  $variables = [
-    'titel' => '',
-    'image' => '',
-
-    'handlung' => [
-      'text' => '',
-      'ort_und_zeit' => '',
-    ],
-
-    'urauffuehrung' => [
-      'origin' => [
-        'ort' => '',
-        'datum' => '',
-        'bemerkung' => '',
-      ],
-      'moeriken' => [
-        'ort' => '',
-        'datum' => '',
-        'bemerkung' => '',
-      ],
-
-    ],
-    'wikipedia' => '',
-    'quellen_link' => '',
-    'copyright_text' => '',
-
-  ];
-
-  $node = Node::load($nid);
-
-
-  if ($node) {
-
-    // titel
-
-    $variables['titel'] = $node->label();
-
-
-    // Handlung Ort und Zeit
-    if (!$node->field_handlung_ort_und_zeit->isEmpty()) {
-      $value = $node->field_handlung_ort_und_zeit->getValue();
-      if (isset($value[0])) {
-        $variables['handlung']['ort_und_zeit'] = $value[0]['value'];
-      }
-    }
-
-
-    // Handlung Text
-    if (!$node->body->isEmpty()) {
-      $value = $node->body->getValue();
-      if (isset($value[0])) {
-        $variables['handlung']['text'] = $value[0];
-      }
-    }
-
-    // field_image
-    if (isset($node->field_image) && !$node->field_image->isEmpty()) {
-      $value = $node->field_image;
-      if (isset($value[0])) {
-        $variables['image'] = getImages($value);
-      }
-    }
-
-    // === Uraufführung
-
-    // Ort
-    if (!$node->field_urauffuehrung_ort->isEmpty()) {
-      $value = $node->field_urauffuehrung_ort->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['origin']['ort'] = $value[0]['value'];
-      }
-    }
-
-    // Datum
-    if (!$node->field_urauffuehrung_datum->isEmpty()) {
-      $value = $node->field_urauffuehrung_datum->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['origin']['datum'] = $value[0]['value'];
-      }
-    }
-
-    // Bemerkung
-    if (!$node->field_urauffuehrung_bemerkung->isEmpty()) {
-      $value = $node->field_urauffuehrung_bemerkung->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['origin']['bemerkung'] = $value[0]['value'];
-      }
-    }
-
-    // === Uraufführung Möriken
-
-    // Ort
-    if (!$node->field_urauffuehrung_moeriken_ort->isEmpty()) {
-      $value = $node->field_urauffuehrung_moeriken_ort->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['moeriken']['ort'] = $value[0]['value'];
-      }
-    }
-
-    // Datum
-    if (!$node->field_urauffuehrung_moeriken_dat->isEmpty()) {
-      $value = $node->field_urauffuehrung_moeriken_dat->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['moeriken']['datum'] = $value[0]['value'];
-      }
-    }
-
-    // Bemerkung
-    if (!$node->field_urauffuehrung_moeriken_bem->isEmpty()) {
-      $value = $node->field_urauffuehrung_moeriken_bem->getValue();
-      if (isset($value[0])) {
-        $variables['urauffuehrung']['moeriken']['bemerkung'] = $value[0]['value'];
-      }
-    }
-
-    // wikipedia
-    if (!$node->field_wikipedia->isEmpty()) {
-      $value = $node->field_wikipedia->getValue();
-      if (isset($value[0])) {
-        $variables['wikipedia'] = $value[0];
-      }
-    }
-
-    // quellen_link
-    if (!$node->field_quellen_link->isEmpty()) {
-      $value = $node->field_quellen_link->getValue();
-      if (isset($value[0])) {
-        $variables['quellen_link'] = $value[0];
-      }
-    }
-
-    // copyright_text
-    if (!$node->field_copyright_text->isEmpty()) {
-      $value = $node->field_copyright_text->getValue();
-      if (isset($value[0])) {
-        $variables['copyright_text'] = $value[0]['value'];
-      }
-    }
-
-  }
-
-
-  return $variables;
-}
 
 function buildEvents($event_id) {
 
@@ -660,7 +149,7 @@ function buildEvents($event_id) {
   // Premiere
   if ($nid_first) {
     $node = NODE::load($nid_first);
-    if (isset($node->field_datum) && !$node->field_datum->isEmpty()) {
+    if (isset($node) && !$node->field_datum->isEmpty()) {
       $value = $node->field_datum->getValue();
       if (isset($value[0])) {
         $variables['premiere'] = $value[0]['value'];
@@ -670,7 +159,7 @@ function buildEvents($event_id) {
   // Derniere
   if ($node && $nid_last) {
     $node = NODE::load($nid_last);
-    if (isset($node->field_datum) && !$node->field_datum->isEmpty()) {
+    if (isset($node) && !$node->field_datum->isEmpty()) {
       $value = $node->field_datum->getValue();
       if (isset($value[0])) {
         $variables['derniere'] = $value[0]['value'];
@@ -682,73 +171,54 @@ function buildEvents($event_id) {
 
 }
 
-function buildBanner($node) {
-  $variables = [];
 
-  if (isset($node->get('field_chronik_banner')->entity)) {
-
-    $list_image_styles = Drupal::entityQuery('image_style')->execute();
-
-    foreach ($list_image_styles as $image_style) {
-      if ($image_style === 'chronik_banner_small' ||
-        $image_style === 'chronik_banner_medium' ||
-        $image_style === 'chronik_banner_large') {
-
-        $style = ImageStyle::load($image_style);
-
-        $name = str_replace("chronik_banner_", "", $image_style);
-
-        $variables[$name] = $style->buildUrl($node->get('field_chronik_banner')->entity->getFileUri()); // Generates file url.
-
-      }
-    }
-
-
-  }
-  return $variables;
-}
-
+/**
+ * @param $node
+ *
+ * @return array
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
 function buildAccentColor($node) {
   // Default-Color: Operette Möriken Red
-  $variables['default'] = "#6E1226";
-  $variables['text'] = "#6E1226";
-  $variables['light'] = "#e7dfdf";
-  $variables['dark'] = "#31020c";
-
-
-  // Default
-  if (!$node->field_accent_color->isEmpty()) {
-    $value = $node->field_accent_color->getValue();
-    if (!empty($value[0])) {
-      $variables['default'] = $value[0]['value'];
-    }
-  }
+  $default = "#6E1226";
+  $text = "#6E1226";
+  $light = "#e7dfdf";
+  $dark = "#31020c";
 
   // Default
-  if (!$node->field_accent_color_text->isEmpty()) {
-    $value = $node->field_accent_color_text->getValue();
-    if (!empty($value[0])) {
-      $variables['text'] = $value[0]['value'];
-    }
-  }
 
+  $default = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color'
+  );
+
+  // Text
+
+  $text = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_text'
+  );
   // Light
-  if (!$node->field_accent_color_light->isEmpty()) {
-    $value = $node->field_accent_color_light->getValue();
-    if (!empty($value[0])) {
-      $variables['light'] = $value[0]['value'];
-    }
-  }
 
+  $light = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_light'
+  );
   // Dark
-  if (!$node->field_accent_color_dark->isEmpty()) {
-    $value = $node->field_accent_color_dark->getValue();
-    if (!empty($value[0])) {
-      $variables['dark'] = $value[0]['value'];
-    }
-  }
 
-  return $variables;
+  $dark = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_dark'
+  );
+
+
+  return [
+    'default' => $default,
+    'text' => $text,
+    'light' => $light,
+    'dark' => $dark,
+  ];
 }
 
 function preloadVars($event_id) {
