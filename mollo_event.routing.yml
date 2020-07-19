@@ -43,3 +43,12 @@ mollo_event.leadership.list:
     _title: 'Leaderships'
   requirements:
     _permission: 'administer content'
+
+
+mollo_event.artist_controller_getVars:
+  path: '/mollo_event/getVars'
+  defaults:
+    _controller: '\Drupal\mollo_event\Controller\ArtistController::getVars'
+    _title: 'getVars'
+  requirements:
+    _permission: 'access content'

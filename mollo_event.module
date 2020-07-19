@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\mollo_event\Controller\WorkController;
 use Drupal\mollo_utils\Utility\Helper;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
@@ -93,7 +94,7 @@ function preprocess_mollo_event(&$variables) {
     //  $variables['composers'] = getComposers($work_id);
 
     // get Work Variables
-    $variables['work'] = getWorkVariables($work_id);
+    $variables['work'] = WorkController::getVars($work_id);
 
 
     // get mitwirkende
@@ -401,108 +402,6 @@ function buildMitwirkende($nid, $funktion, $work_id, $operetten_allgemein) {
 
 }
 
-/**
- *
- * Get all Information from Work and Names from Composers and Writers
- *
- *  Bundle mollo_work
- * -----------------------------------------
- *    - field_mollo_composers
- *    - field_mollo_plot
- *    - field_mollo_name
- *    - field_mollo_plot_location_time
- *    - field_mollo_premiere_date
- *    - field_mollo_premiere_place
- *    - field_mollo_premiere_note
- *    - field_mollo_copyright
- *    - field_mollo_source_origin
- *    - field_mollo_world_premiere_date
- *    - field_mollo_world_premiere_place
- *    - field_mollo_world_premiere_note
- *    - field_mollo_writers
- *
- *
- * @param $work_id
- *
- * @return array
- */
-function getWorkVariables($work_id) {
-
-  // load mollo_work ID from mollo_event
-  // load mollo_artists from mollo_work
-
-  $variables = [
-    'plot' => '',
-    'name' => '',
-    'plot_location_time' => '',
-    'premiere_date' => '',
-    'premiere_place' => '',
-    'premiere_note' => '',
-    'copyright' => '',
-    'source_origin' => '',
-    'world_premiere_date' => '',
-    'world_premiere_place' => '',
-    'world_premiere_note' => '',
-    'composers' => '',
-    'writers' => '',
-  ];
-
-  $node = Node::load($work_id);
-
-  if (isset($node)) {
-
-    $plot = Helper::getFieldValue($node, 'field_mollo_plot');
-    $name = Helper::getFieldValue($node, 'field_mollo_name');
-    $plot_location_time = Helper::getFieldValue($node, 'field_mollo_plot_location_time');
-    $premiere_date = Helper::getFieldValue($node, 'field_mollo_premiere_date');
-    $premiere_place = Helper::getFieldValue($node, 'field_mollo_premiere_place');
-    $premiere_note = Helper::getFieldValue($node, 'field_mollo_premiere_note');
-    $copyright = Helper::getFieldValue($node, 'field_mollo_copyright');
-    $source_origin = Helper::getFieldValue($node, 'field_mollo_source_origin');
-    $world_premiere_date = Helper::getFieldValue($node, 'field_mollo_world_premiere_date');
-    $world_premiere_place = Helper::getFieldValue($node, 'field_mollo_world_premiere_place');
-    $world_premiere_note = Helper::getFieldValue($node, 'field_mollo_world_premiere_note');
-    $composers_ids = Helper::getFieldValue($node, 'field_mollo_composers', NULL, TRUE);
-    $writers_ids = Helper::getFieldValue($node, 'field_mollo_writers', NULL, TRUE);
-
-    // Composer
-    $composers = [];
-    if ($composers_ids !== 0) {
-      foreach ($composers_ids as $composers_id) {
-        $composers[] = getArtist($composers_id);
-      }
-    }
-
-
-    // Writer
-    $writers = [];
-    if ($writers_ids !== 0) {
-      foreach ($writers_ids as $writers_id) {
-        $writers[] = getArtist($writers_id);
-      }
-    }
-
-
-    $variables = [
-      'plot' => $plot,
-      'name' => $name,
-      'plot_location_time' => $plot_location_time,
-      'premiere_date' => $premiere_date,
-      'premiere_place' => $premiere_place,
-      'premiere_note' => $premiere_note,
-      'copyright' => $copyright,
-      'source_origin' => $source_origin,
-      'world_premiere_date' => $world_premiere_date,
-      'world_premiere_place' => $world_premiere_place,
-      'world_premiere_note' => $world_premiere_note,
-      'composers' => $composers,
-      'writers' => $writers,
-    ];
-  }
-
-
-  return $variables;
-}
 
 /**
  * @param $id
@@ -545,32 +444,36 @@ function getArtist($id) {
   $node = Node::load($id);
 
 
-
   if (isset($node)) {
+
+    // Get Field Values
     $first_name = Helper::getFieldValue($node, 'field_mollo_first_name');
-    $last_name  = Helper::getFieldValue($node, 'field_mollo_last_name');
-    $voice_position   = Helper::getFieldValue($node, 'field_mollo_voice_position');
-    $function   = Helper::getFieldValue($node, 'field_mollo_function');
-    $instrument = Helper::getFieldValue($node, 'field_mollo_instrument');
-    $position   = Helper::getFieldValue($node, 'field_mollo_position');
-    $speciality = Helper::getFieldValue($node, 'field_mollo_speciality');
+    $last_name = Helper::getFieldValue($node, 'field_mollo_last_name');
+
+    // Get only IDs
     $title_image = Helper::getFieldValue($node, 'field_mollo_title_image');
 
+    // Get Taxonomy Content TODO: Preload Taxonomy Data
+    $voice_position = Helper::getFieldValue($node, 'field_mollo_voice_position');
+    $function = Helper::getFieldValue($node, 'field_mollo_function');
+    $instrument = Helper::getFieldValue($node, 'field_mollo_instrument');
+    $position = Helper::getFieldValue($node, 'field_mollo_position');
+    $speciality = Helper::getFieldValue($node, 'field_mollo_speciality');
 
+    // Build Variables Array
     return [
       'id' => $id,
-      'first_name' =>     $first_name,
-      'last_name' =>     $last_name,
-      'function' =>     $function,
-      'voice_position' =>     $voice_position,
-      'instrument' =>     $instrument,
-      'position' =>     $position,
-      'speciality' =>     $speciality,
-      'image' =>     $title_image,
+      'first_name' => $first_name,
+      'last_name' => $last_name,
+      'function' => $function,
+      'voice_position' => $voice_position,
+      'instrument' => $instrument,
+      'position' => $position,
+      'speciality' => $speciality,
+      'image' => $title_image,
     ];
 
   }
-
 
 
   return [];
