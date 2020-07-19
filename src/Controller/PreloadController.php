@@ -33,14 +33,14 @@ class PreloadController extends ControllerBase
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function getVars(): array {
-    $event_status = Helper::getTermsByName('mollo_event_status');
-    $event_category = Helper::getTermsByName('mollo_event_category');
-    $voice_position = Helper::getTermsByName('mollo_voice_position');
-    $instrument = Helper::getTermsByName('mollo_instrument');
-    $function = Helper::getTermsByName('mollo_function');
-    $position = Helper::getTermsByName('mollo_position');
-    $speciality = Helper::getTermsByName('mollo_speciality');
-    $country = Helper::getTermsByName('mollo_country');
+    $event_status = Helper::getTermsByID('mollo_event_status');
+    $event_category = Helper::getTermsByID('mollo_event_category');
+    $voice_position = Helper::getTermsByID('mollo_voice_position');
+    $instrument = Helper::getTermsByID('mollo_instrument');
+    $function = Helper::getTermsByID('mollo_function');
+    $position = Helper::getTermsByID('mollo_position');
+    $speciality = Helper::getTermsByID('mollo_speciality');
+    $country = Helper::getTermsByID('mollo_country');
 
     return [
       'event_status' => $event_status,

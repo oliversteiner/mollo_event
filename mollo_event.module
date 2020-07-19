@@ -83,32 +83,15 @@ function preprocess_mollo_event(&$variables) {
     $event_number = $node->get('field_mollo_number')->getValue();
     $event_number = $event_number[0]['value'];
 
-    //  $operette_allgemein = preloadVars($event_id);
-
     $vocabularies = PreloadController::getVars();
+    $artists = ArtistController::getArtistsFromEvent($event_id, $vocabularies);
 
     // get Work Variables
+    $variables['artists'] = $artists;
     $variables['work'] = WorkController::getVars($work_id, $vocabularies);
-    $variables['artists'] = ArtistController::getAllFromEvent($work_id, $vocabularies);
+    $variables['musicians'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'musician');
+    $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
 
-
-    // get mitwirkende
-    //  $variables['kreativ_team'] = buildMitwirkende($event_id, 'Kreativ Team', $work_id, $operette_allgemein);
-    //  $variables['solisten'] = buildMitwirkende($event_id, 'Solist', $work_id, $operette_allgemein);
-    //  $variables['chor'] = buildMitwirkende($event_id, 'Chor', $work_id, $operette_allgemein);
-    //  $variables['kinder_chor'] = buildMitwirkende($event_id, 'Kinderchor', $work_id, $operette_allgemein);
-    //  $variables['orchester'] = buildMitwirkende($event_id, 'Orchester', $work_id, $operette_allgemein);
-    //  $variables['leitung'] = buildLeitung($event_id, $operette_allgemein);
-
-    // UNIG
-    // $variables['galleries'] = buildGalerie($node);
-
-    // Aufführungen
-    //  $variables['events'] = buildEvents($event_id);
-    //   $variables['chronik_banner'] = buildBanner($node);
-
-    // accent-color
-    //   $variables['accent_color'] = buildAccentColor($node);
 
   }
 
