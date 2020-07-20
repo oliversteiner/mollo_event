@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\mollo_event\Controller\ArtistController;
+use Drupal\mollo_event\Controller\EventDatesController;
 use Drupal\mollo_event\Controller\LocationController;
 use Drupal\mollo_event\Controller\PreloadController;
 use Drupal\mollo_event\Controller\WorkController;
@@ -115,6 +116,11 @@ function preprocess_mollo_event(&$variables) {
       }
     }
     $variables['locations'] = $locations;
+
+
+    // Dates
+    $variables['event_dates'] = EventDatesController::getDatesFromEvent($event_id, $vocabularies, $locations);
+
   }
 
 
