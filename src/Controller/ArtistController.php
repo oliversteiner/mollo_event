@@ -99,8 +99,8 @@ class ArtistController extends ControllerBase
    *    - field_mollo_artist_groups
    *
    *   Images
-   *     - field_mollo_title_image (Entity: Media)
-   *     - field_mollo_media (Entity: Media)
+   *     - field_mollo_title_image ( Entity: Media )
+   *     - field_mollo_media ( Entity: Media )
    *
    *   Classification
    *     - field_mollo_function ( Term: mollo_function )
@@ -133,7 +133,6 @@ class ArtistController extends ControllerBase
    *
    * @param $artist_id
    *
-   * @param $vocabularies
    *
    * @return array|string[]
    *   Return Artist Twig Vars

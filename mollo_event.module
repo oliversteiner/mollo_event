@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\mollo_event\Controller\ArtistController;
+use Drupal\mollo_event\Controller\LocationController;
 use Drupal\mollo_event\Controller\PreloadController;
 use Drupal\mollo_event\Controller\WorkController;
 use Drupal\mollo_utils\Utility\Helper;
@@ -81,17 +82,19 @@ function preprocess_mollo_event(&$variables) {
   if ($node instanceof NodeInterface) {
     $event_id = $node->id();
 
-
+// Event Work
     $work_id = $node->get('field_mollo_work')->getValue();
     $work_id = $work_id[0]['target_id'];
 
+// Event Number
     $event_number = $node->get('field_mollo_number')->getValue();
     $event_number = $event_number[0]['value'];
+
 
     $vocabularies = PreloadController::getVars();
     $artists = ArtistController::getArtistsFromEvent($event_id, $vocabularies);
 
-    // get Work Variables
+    // get Twig Variables
     $variables['artists'] = $artists;
     $variables['work'] = WorkController::getVars($work_id, $vocabularies);
     $variables['musicians'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'musician');
@@ -99,7 +102,21 @@ function preprocess_mollo_event(&$variables) {
     $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
     $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);
 
+    // Locations
+    $locations = [];
+    // get Location IDs
+    $location_ids = Helper::getFieldValue($node, 'field_mollo_locations');
+    // Nodes found
+    if (count($location_ids) !== 0) {
+      // Load all Locations
+      foreach ($location_ids as $location_id) {
+        // Output Array
+        $locations[] = LocationController::getVars($location_id);
+      }
+    }
+    $variables['locations'] = $locations;
   }
+
 
 
 }
