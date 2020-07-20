@@ -7,9 +7,8 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\mollo_utils\Utility\Helper;
 
 /**
- * Class ArtistController.
+ * Class LocationController.
  *
- * Get all Information from Work and Names from Composers and Writers
  *
  *  Bundle mollo_locations
  * -----------------------------------------
@@ -87,7 +86,7 @@ class LocationController extends ControllerBase {
    * @param $location_id
    *
    * @return array|string[]
-   *   Return Artist Twig Vars
+   *   Return Location Twig Vars
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -117,9 +116,9 @@ class LocationController extends ControllerBase {
 
       // Build Variables Array
       return [
-        'description' => $description,
+        'id' => $location_id,
         'name' => $name,
-        'notes' => $notes,
+        'description' => $description,
         'place' => $place,
         'street_and_number' => $street_and_number,
         'city' => $city,
@@ -133,6 +132,7 @@ class LocationController extends ControllerBase {
         'facebook' => $facebook,
         'title_image' => $title_image,
         'media' => $media,
+        'notes' => $notes,
       ];
     }
     return [];
