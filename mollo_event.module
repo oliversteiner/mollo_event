@@ -93,12 +93,13 @@ function preprocess_mollo_event(&$variables) {
 
 
     $vocabularies = PreloadController::getVars();
-    $artists = ArtistController::getArtistsFromEvent($event_id, $vocabularies);
+    $artists = ArtistController::getArtistsFromEvent($event_id);
+    $musicians = ArtistController::getArtistsFromEvent($event_id, TRUE);
 
     // get Twig Variables
     $variables['artists'] = $artists;
     $variables['work'] = WorkController::getVars($work_id, $vocabularies);
-    $variables['musicians'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'musician');
+    $variables['musicians'] = ArtistController::getFilteredArtist($musicians, $vocabularies, 'musician');
     $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
     $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
     $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);

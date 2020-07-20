@@ -84,8 +84,6 @@ class ArtistController extends ControllerBase
 
   public $icon;
 
-  public $group_by; // Artists group by Taxonomy
-
   /**
    * Getvars.
    *
@@ -200,7 +198,7 @@ class ArtistController extends ControllerBase
       $value = $node->get('field_mollo_instrument')->getValue();
       if($value){
         $instrument_id = $value[0]['target_id'];
-      $icon = Helper::getTermIconByID($instrument_id);
+        $icon = Helper::getTermIconByID($instrument_id);
       }
 
 
@@ -223,6 +221,8 @@ class ArtistController extends ControllerBase
 
     return [];
   }
+
+  public $group_by; // Artists group by Taxonomy
 
   /**
    * getRoleVars.
@@ -316,20 +316,28 @@ class ArtistController extends ControllerBase
    * @param $event_id
    * @param $vocabularies
    *
+   * @param bool $musicians
+   *
    * @return array
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getArtistsFromEvent($event_id, $vocabularies): array
+  public static function getArtistsFromEvent($event_id, $musicians = FALSE): array
   {
     $all_artists = [];
+    if($musicians){
+      $field_event = 'field_mollo_event_orchestra';
+    }else{
+      $field_event = 'field_mollo_event';
+
+    }
 
     // load all Node IDs from "mollo_artist" with mollo_event ID
     $query = Drupal::entityQuery('node')
       //
       // Condition
       ->condition('type', 'mollo_artist')
-      ->condition('field_mollo_event', $event_id)
+      ->condition($field_event, $event_id)
       // Access
       ->accessCheck(false);
 
@@ -340,7 +348,7 @@ class ArtistController extends ControllerBase
       // Load all Artists
       foreach ($artist_ids as $artist_id) {
         // Output Array
-        $all_artists[] = self::getVars($artist_id, $vocabularies);
+        $all_artists[] = self::getVars($artist_id);
       }
     }
 
