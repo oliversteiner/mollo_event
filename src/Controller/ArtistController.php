@@ -82,6 +82,10 @@ class ArtistController extends ControllerBase
 
   public $leadership;
 
+  public $icon;
+
+  public $group_by; // Artists group by Taxonomy
+
   /**
    * Getvars.
    *
@@ -191,6 +195,16 @@ class ArtistController extends ControllerBase
         true
       );
 
+      // Icon
+      $icon = '';
+      $value = $node->get('field_mollo_instrument')->getValue();
+      if($value){
+        $instrument_id = $value[0]['target_id'];
+      $icon = Helper::getTermIconByID($instrument_id);
+      }
+
+
+
       // Build Variables Array
       return [
         'id' => $artist_id,
@@ -199,10 +213,11 @@ class ArtistController extends ControllerBase
         'function' => $function,
         'voice_position' => $voice_position,
         'instrument' => $instrument,
+        'icon' => $icon,
         'position' => $position,
         'speciality' => $speciality,
         'image' => $title_image,
-        'country' => $country
+        'country' => $country,
       ];
     }
 
@@ -363,8 +378,13 @@ class ArtistController extends ControllerBase
 
     // Build Twig Array from Vocabularies
     $terms = [];
+    $artist_list = self::artistFilterFunction(
+      $needle,
+      $artists
+    );
+
     foreach ($vocabularies[$vocabulary] as $term_id => $term_name) {
-      $artists_filtered = self::artistFilter(
+      $artists_filtered = self::artistFilterOrderByVoc(
         $term_name,
         $vocabulary,
         $needle,
@@ -379,7 +399,12 @@ class ArtistController extends ControllerBase
       }
     }
 
-    return $terms;
+    //  Group by Term
+    $result['group_by'] = $terms;
+    $result['artists'] = $artist_list;
+    //  Artists
+
+    return $result;
   }
 
   /**
@@ -392,7 +417,7 @@ class ArtistController extends ControllerBase
    *
    * @return array
    */
-  public static function artistFilter(
+  public static function artistFilterOrderByVoc(
     $term_name,
     $vocabulary,
     $needle,
@@ -419,6 +444,39 @@ class ArtistController extends ControllerBase
     }
     return $results;
   }
+
+  /**
+   *
+   *
+   * @param $term_name
+   * @param $vocabulary
+   * @param $needle
+   * @param $artists
+   *
+   * @return array
+   */
+  public static function artistFilterFunction(
+    $needle,
+    $artists
+  ): array {
+    $results = [];
+    $ids = [];
+    foreach ($artists as $artist) {
+      foreach ($artist['function'] as $function) {
+        // Needle in Function (Choir, Orchestra, Leadership)
+        if (in_array($needle, $artist['function'], true)) {
+            // Eliminate duplicates
+            if (!in_array($artist['id'], $ids, true)) {
+              $ids[] = $artist['id'];
+              // Add filterd Artist to Result
+              $results[] = $artist;
+          }
+        }
+      }
+    }
+    return $results;
+  }
+
 
   public static function getSoloArtist(
     $event_id,
@@ -526,9 +584,7 @@ class ArtistController extends ControllerBase
           // Get Name from Position Term
           if (isset($leader['position_id'])) {
             $artist['position'] =
-              $vocabularies['position'][
-                $leader['position_id']
-              ];
+              $vocabularies['position'][$leader['position_id']];
           }
 
           // Add Role-Vars to Artist
