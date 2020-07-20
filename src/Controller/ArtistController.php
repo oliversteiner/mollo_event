@@ -83,6 +83,7 @@ class ArtistController extends ControllerBase
   public $leadership;
 
   public $icon;
+  public $id;
 
   /**
    * Getvars.
