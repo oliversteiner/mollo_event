@@ -1,0 +1,43 @@
+uuid: aa903cd4-fa35-47a7-9143-5072d26fdeca
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.mollo_artist_group.body
+    - field.field.node.mollo_artist_group.field_mollo_artists
+    - field.field.node.mollo_artist_group.field_mollo_description
+    - field.field.node.mollo_artist_group.field_mollo_event
+    - field.field.node.mollo_artist_group.field_mollo_media
+    - field.field.node.mollo_artist_group.field_mollo_name
+    - field.field.node.mollo_artist_group.field_mollo_title_image
+    - node.type.mollo_artist_group
+  module:
+    - text
+    - user
+id: node.mollo_artist_group.teaser
+targetEntityType: node
+bundle: mollo_artist_group
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_mollo_artists: true
+  field_mollo_description: true
+  field_mollo_event: true
+  field_mollo_media: true
+  field_mollo_name: true
+  field_mollo_title_image: true
+  langcode: true

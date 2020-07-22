@@ -1,0 +1,14 @@
+uuid: 535d4d79-bdf7-43cd-b2cd-add728ba0084
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.mollo_admin
+  module:
+    - user
+id: user_add_role_action.mollo_admin
+label: 'Add the Mollo Admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: mollo_admin

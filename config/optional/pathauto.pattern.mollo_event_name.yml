@@ -1,0 +1,22 @@
+uuid: d37b5a60-dd5d-409e-820c-f9ebdcbabc82
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: mollo_event_name
+label: 'Mollo Event Name'
+type: 'canonical_entities:node'
+pattern: '/event/[node:field_mollo_name]'
+selection_criteria:
+  37d0eeb6-7a44-4512-bdc1-1fd24d2fd3fe:
+    id: node_type
+    bundles:
+      mollo_event: mollo_event
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 37d0eeb6-7a44-4512-bdc1-1fd24d2fd3fe
+selection_logic: and
+weight: -5
+relationships: {  }

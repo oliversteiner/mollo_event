@@ -1,0 +1,29 @@
+uuid: 125d9c5d-858d-40eb-a4ef-843ad7418973
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_function
+    - node.type.mollo_artist
+    - taxonomy.vocabulary.mollo_function
+id: node.mollo_artist.field_mollo_function
+field_name: field_mollo_function
+entity_type: node
+bundle: mollo_artist
+label: Function
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      mollo_function: mollo_function
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: mollo_function
+field_type: entity_reference

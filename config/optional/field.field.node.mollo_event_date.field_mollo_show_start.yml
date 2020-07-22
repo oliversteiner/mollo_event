@@ -1,0 +1,23 @@
+uuid: 44be48cb-18bf-45c5-8151-693665babaa7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_show_start
+    - node.type.mollo_event_date
+id: node.mollo_event_date.field_mollo_show_start
+field_name: field_mollo_show_start
+entity_type: node
+bundle: mollo_event_date
+label: 'Show Start Time'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

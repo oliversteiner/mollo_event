@@ -1,0 +1,55 @@
+uuid: 1b7d2932-8bc6-4af4-8cc3-1f05623a5122
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.mollo_event_date.body
+    - field.field.node.mollo_event_date.field_mollo_description
+    - field.field.node.mollo_event_date.field_mollo_director
+    - field.field.node.mollo_event_date.field_mollo_door_opening
+    - field.field.node.mollo_event_date.field_mollo_end
+    - field.field.node.mollo_event_date.field_mollo_event
+    - field.field.node.mollo_event_date.field_mollo_host
+    - field.field.node.mollo_event_date.field_mollo_notes
+    - field.field.node.mollo_event_date.field_mollo_number
+    - field.field.node.mollo_event_date.field_mollo_show_end
+    - field.field.node.mollo_event_date.field_mollo_show_start
+    - field.field.node.mollo_event_date.field_mollo_start
+    - field.field.node.mollo_event_date.field_mollo_status
+    - node.type.mollo_event_date
+  module:
+    - text
+    - user
+id: node.mollo_event_date.teaser
+targetEntityType: node
+bundle: mollo_event_date
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_mollo_description: true
+  field_mollo_director: true
+  field_mollo_door_opening: true
+  field_mollo_end: true
+  field_mollo_event: true
+  field_mollo_host: true
+  field_mollo_notes: true
+  field_mollo_number: true
+  field_mollo_show_end: true
+  field_mollo_show_start: true
+  field_mollo_start: true
+  field_mollo_status: true
+  langcode: true

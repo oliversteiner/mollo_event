@@ -1,0 +1,14 @@
+uuid: 2d3fc451-5648-487f-b971-41076a714a46
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.mollo_editor
+  module:
+    - user
+id: user_remove_role_action.mollo_editor
+label: 'Remove the Mollo Editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: mollo_editor

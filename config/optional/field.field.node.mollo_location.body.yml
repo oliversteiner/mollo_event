@@ -1,0 +1,23 @@
+uuid: 1343aba2-cd9b-4e09-870a-c747f1ec08a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.mollo_location
+  module:
+    - text
+id: node.mollo_location.body
+field_name: body
+entity_type: node
+bundle: mollo_location
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

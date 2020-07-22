@@ -1,0 +1,11 @@
+uuid: 20832dd2-dbf0-4b9d-97a4-e431091c26ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_video
+id: media.mollo_video
+target_entity_type_id: media
+target_bundle: mollo_video
+default_langcode: site_default
+language_alterable: false

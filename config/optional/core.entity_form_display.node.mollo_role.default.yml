@@ -1,0 +1,60 @@
+uuid: 9897ef72-1350-455d-b806-91cb4d42cd5f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_role.body
+    - field.field.node.mollo_role.field_mollo_artist
+    - field.field.node.mollo_role.field_mollo_description
+    - field.field.node.mollo_role.field_mollo_event
+    - field.field.node.mollo_role.field_mollo_name
+    - node.type.mollo_role
+  module:
+    - text
+id: node.mollo_role.default
+targetEntityType: node
+bundle: mollo_role
+mode: default
+content:
+  field_mollo_artist:
+    weight: 3
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_description:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_mollo_event:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_mollo_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  body: true
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  title: true
+  uid: true

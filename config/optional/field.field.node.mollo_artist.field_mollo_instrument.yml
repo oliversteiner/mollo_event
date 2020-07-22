@@ -1,0 +1,29 @@
+uuid: b8cab90a-2e78-488d-8ffc-459eea20d7f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_instrument
+    - node.type.mollo_artist
+    - taxonomy.vocabulary.mollo_instrument
+id: node.mollo_artist.field_mollo_instrument
+field_name: field_mollo_instrument
+entity_type: node
+bundle: mollo_artist
+label: Instrument
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      mollo_instrument: mollo_instrument
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

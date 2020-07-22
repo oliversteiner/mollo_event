@@ -1,0 +1,23 @@
+uuid: 51b1beb8-fe2f-415c-ab5a-26d6f2e1f7c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_facebook
+    - node.type.mollo_artist
+  module:
+    - link
+id: node.mollo_artist.field_mollo_facebook
+field_name: field_mollo_facebook
+entity_type: node
+bundle: mollo_artist
+label: Facebook
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

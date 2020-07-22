@@ -1,0 +1,17 @@
+uuid: cffb0a13-8290-41c0-b506-bf63299d401d
+langcode: en
+status: false
+dependencies: {  }
+id: mollo_video_remote
+label: 'Mollo Video Remote'
+description: Mollo
+source: 'oembed:video'
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  thumbnails_directory: 'public://oembed_thumbnails'
+  providers:
+    - YouTube
+    - Vimeo
+  source_field: field_media_oembed_video
+field_map: {  }

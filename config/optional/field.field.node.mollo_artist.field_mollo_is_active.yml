@@ -1,0 +1,23 @@
+uuid: a9831884-04fe-4cba-b641-54732d873eb8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_is_active
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_is_active
+field_name: field_mollo_is_active
+entity_type: node
+bundle: mollo_artist
+label: 'is active'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

@@ -1,0 +1,28 @@
+uuid: 608b02ab-7f52-42ba-bcfe-27bfd3c7e6a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_title_image
+    - media.type.mollo_image
+    - node.type.mollo_artist_group
+id: node.mollo_artist_group.field_mollo_title_image
+field_name: field_mollo_title_image
+entity_type: node
+bundle: mollo_artist_group
+label: 'Title Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      mollo_image: mollo_image
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: image
+field_type: entity_reference

@@ -1,0 +1,21 @@
+uuid: ade51ffc-da10-40e8-9e78-fb1ee964dc93
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_resigning
+    - node.type.mollo_artist
+  module:
+    - datetime
+id: node.mollo_artist.field_mollo_resigning
+field_name: field_mollo_resigning
+entity_type: node
+bundle: mollo_artist
+label: 'Resigning Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

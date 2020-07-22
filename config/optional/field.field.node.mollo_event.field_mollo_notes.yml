@@ -1,0 +1,29 @@
+uuid: d9ae0a78-f0f5-43cb-8694-ea6571b9d83f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_notes
+    - node.type.mollo_event
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    text: text
+    full_html: full_html
+    html_email: '0'
+    json: '0'
+id: node.mollo_event.field_mollo_notes
+field_name: field_mollo_notes
+entity_type: node
+bundle: mollo_event
+label: Notes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

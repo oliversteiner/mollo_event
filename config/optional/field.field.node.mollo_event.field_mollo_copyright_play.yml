@@ -1,0 +1,29 @@
+uuid: 0ecc8215-9832-4707-93b0-72536041d339
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_copyright_play
+    - node.type.mollo_event
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    full_html: full_html
+    text: '0'
+    html_email: '0'
+    json: '0'
+id: node.mollo_event.field_mollo_copyright_play
+field_name: field_mollo_copyright_play
+entity_type: node
+bundle: mollo_event
+label: 'Copyright play by'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

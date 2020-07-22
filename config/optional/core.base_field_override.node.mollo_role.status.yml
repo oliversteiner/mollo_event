@@ -1,0 +1,22 @@
+uuid: 0db3bef0-a1ab-4131-8d7a-ddcdde2997e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_role
+id: node.mollo_role.status
+field_name: status
+entity_type: node
+bundle: mollo_role
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

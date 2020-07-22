@@ -1,0 +1,23 @@
+uuid: 0e1f2461-ca16-4f7c-987a-c7ae8953614a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.mollo_artist
+  module:
+    - text
+id: node.mollo_artist.body
+field_name: body
+entity_type: node
+bundle: mollo_artist
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

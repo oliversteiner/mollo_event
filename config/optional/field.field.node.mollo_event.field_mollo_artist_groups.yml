@@ -1,0 +1,28 @@
+uuid: 86259104-2add-4df0-8aa5-694e3bd24e0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_artist_groups
+    - node.type.mollo_artist_group
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_artist_groups
+field_name: field_mollo_artist_groups
+entity_type: node
+bundle: mollo_event
+label: 'Artist Groups'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_artist_group: mollo_artist_group
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

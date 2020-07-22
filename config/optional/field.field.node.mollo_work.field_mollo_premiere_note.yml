@@ -1,0 +1,29 @@
+uuid: 1f651982-515f-433c-adcc-62713c052971
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_premiere_note
+    - node.type.mollo_work
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    full_html: full_html
+    text: '0'
+    html_email: '0'
+    json: '0'
+id: node.mollo_work.field_mollo_premiere_note
+field_name: field_mollo_premiere_note
+entity_type: node
+bundle: mollo_work
+label: 'Premiere - Remarks'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

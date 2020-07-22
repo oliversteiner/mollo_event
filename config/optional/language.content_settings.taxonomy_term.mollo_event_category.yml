@@ -1,0 +1,16 @@
+uuid: 7bb227c9-8c80-458d-ac99-1a9ad130c250
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.mollo_event_category
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: taxonomy_term.mollo_event_category
+target_entity_type_id: taxonomy_term
+target_bundle: mollo_event_category
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,11 @@
+uuid: f0c2cf21-0566-4e3a-a4c1-2f07665377be
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_role
+id: node.mollo_role
+target_entity_type_id: node
+target_bundle: mollo_role
+default_langcode: site_default
+language_alterable: false

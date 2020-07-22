@@ -1,0 +1,23 @@
+uuid: 23e065a8-4176-4ae3-ab88-4ce7617851c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.mollo_event_leadership
+  module:
+    - text
+id: node.mollo_event_leadership.body
+field_name: body
+entity_type: node
+bundle: mollo_event_leadership
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

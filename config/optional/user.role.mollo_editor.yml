@@ -1,0 +1,35 @@
+uuid: 3aed84f2-cd47-4ab2-a773-5b05061e8e26
+langcode: en
+status: true
+dependencies: {  }
+id: mollo_editor
+label: 'Mollo Editor'
+weight: 7
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access draggableviews'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access shortcuts'
+  - 'access toolbar'
+  - 'access unig admin'
+  - 'access unig download'
+  - 'access unig private'
+  - 'access upload form'
+  - 'access user profiles'
+  - 'administer imce'
+  - 'administer nodes'
+  - 'administer taxonomy'
+  - 'change own username'
+  - 'clone mollo_event_date content'
+  - 'create media'
+  - 'delete any media'
+  - 'delete media'
+  - 'translate any entity'
+  - 'update any media'
+  - 'update media'
+  - 'use text format full_html'
+  - 'view all media revisions'
+  - 'view own unpublished media'

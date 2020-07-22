@@ -1,0 +1,23 @@
+uuid: 5116a8e8-b59b-4df8-98e1-9c69ab4f36d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_links
+    - node.type.mollo_location
+  module:
+    - link
+id: node.mollo_location.field_mollo_links
+field_name: field_mollo_links
+entity_type: node
+bundle: mollo_location
+label: Links
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

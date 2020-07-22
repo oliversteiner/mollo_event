@@ -1,0 +1,30 @@
+uuid: 30da9488-62d9-417a-b2ef-8dc7a272da2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_video
+    - media.type.mollo_video
+    - media.type.mollo_video_remote
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_video
+field_name: field_mollo_video
+entity_type: node
+bundle: mollo_event
+label: 'Mollo Video'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      mollo_video: mollo_video
+      mollo_video_remote: mollo_video_remote
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: mollo_video
+field_type: entity_reference

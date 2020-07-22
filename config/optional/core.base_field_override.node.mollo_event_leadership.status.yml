@@ -1,0 +1,22 @@
+uuid: bd133e95-1435-4ee4-b45d-4e3654ae0fc6
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_event_leadership
+id: node.mollo_event_leadership.status
+field_name: status
+entity_type: node
+bundle: mollo_event_leadership
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,17 @@
+uuid: 0ce83a8b-7a20-4cff-889d-c5755b821c58
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Artist Group'
+type: mollo_artist_group
+description: Mollo
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

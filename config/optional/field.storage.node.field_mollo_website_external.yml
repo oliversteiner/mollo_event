@@ -1,0 +1,19 @@
+uuid: d435add2-8603-40a4-91c7-33de78d1a8e8
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_mollo_website_external
+field_name: field_mollo_website_external
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,18 @@
+uuid: 14d272fd-6195-45bc-8381-eed7f8ad4301
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_mollo_email
+field_name: field_mollo_email
+entity_type: node
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

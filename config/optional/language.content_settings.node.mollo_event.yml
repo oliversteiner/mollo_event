@@ -1,0 +1,11 @@
+uuid: 4d7d5f95-2cc8-4d2a-ae22-483e7a4a4e4f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_event
+id: node.mollo_event
+target_entity_type_id: node
+target_bundle: mollo_event
+default_langcode: site_default
+language_alterable: false

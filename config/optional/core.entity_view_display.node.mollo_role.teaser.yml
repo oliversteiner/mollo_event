@@ -1,0 +1,39 @@
+uuid: a660b1b0-82e9-47fc-a6ab-480d64a22483
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.mollo_role.body
+    - field.field.node.mollo_role.field_mollo_artist
+    - field.field.node.mollo_role.field_mollo_description
+    - field.field.node.mollo_role.field_mollo_event
+    - field.field.node.mollo_role.field_mollo_name
+    - node.type.mollo_role
+  module:
+    - text
+    - user
+id: node.mollo_role.teaser
+targetEntityType: node
+bundle: mollo_role
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_mollo_artist: true
+  field_mollo_description: true
+  field_mollo_event: true
+  field_mollo_name: true
+  langcode: true

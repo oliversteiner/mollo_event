@@ -1,0 +1,22 @@
+uuid: 119b1c5e-2d22-4be3-9037-1824bbf0c5f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_event_leadership
+id: node.mollo_event_leadership.promote
+field_name: promote
+entity_type: node
+bundle: mollo_event_leadership
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

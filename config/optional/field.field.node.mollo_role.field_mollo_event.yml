@@ -1,0 +1,28 @@
+uuid: 0af9d973-ba1e-4374-9a1e-e348653cde19
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_event
+    - node.type.mollo_event
+    - node.type.mollo_role
+id: node.mollo_role.field_mollo_event
+field_name: field_mollo_event
+entity_type: node
+bundle: mollo_role
+label: Event
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_event: mollo_event
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

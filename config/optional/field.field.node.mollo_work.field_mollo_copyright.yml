@@ -1,0 +1,19 @@
+uuid: 08b0adbe-f62d-4ece-91f1-99f183aea34c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_copyright
+    - node.type.mollo_work
+id: node.mollo_work.field_mollo_copyright
+field_name: field_mollo_copyright
+entity_type: node
+bundle: mollo_work
+label: Copyright
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

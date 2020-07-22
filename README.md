@@ -61,3 +61,9 @@ mollo_event_status
 mollo_name
 mollo_composers
 mollo_writers
+
+
+### Bundle Event Leadership
+- event  (ref->Event)
+- position (term)
+- artist (ref->Artist)

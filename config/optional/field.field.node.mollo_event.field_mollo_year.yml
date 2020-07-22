@@ -1,0 +1,23 @@
+uuid: cdac44c2-466d-4d59-b0e9-447733780f15
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_year
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_year
+field_name: field_mollo_year
+entity_type: node
+bundle: mollo_event
+label: Year
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: !!float 1900
+  max: !!float 2099
+  prefix: ''
+  suffix: ''
+field_type: decimal

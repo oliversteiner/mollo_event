@@ -1,0 +1,41 @@
+uuid: 7d80d1a1-60f8-4867-ad5e-8549b5b106a0
+langcode: en
+status: true
+dependencies: {  }
+id: mollo_admin
+label: 'Mollo Admin'
+weight: 6
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access draggableviews'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access shortcuts'
+  - 'access toolbar'
+  - 'access unig admin'
+  - 'access unig download'
+  - 'access unig private'
+  - 'access upload form'
+  - 'access user profiles'
+  - 'administer imce'
+  - 'administer media'
+  - 'administer menu'
+  - 'administer nodes'
+  - 'administer taxonomy'
+  - 'administer url aliases'
+  - 'change own username'
+  - 'clone mollo_event_date content'
+  - 'create media'
+  - 'create url aliases'
+  - 'delete any media'
+  - 'delete media'
+  - 'translate any entity'
+  - 'update any media'
+  - 'update media'
+  - 'use text format full_html'
+  - 'view all media revisions'
+  - 'view own unpublished media'
+  - 'view the administration theme'

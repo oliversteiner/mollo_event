@@ -1,0 +1,8 @@
+uuid: 365a12bd-a8ed-47df-a792-4f481984d53b
+langcode: und
+status: true
+dependencies: {  }
+name: 'Event Status'
+vid: mollo_event_status
+description: Mollo
+weight: 0

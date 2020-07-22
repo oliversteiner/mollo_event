@@ -1,0 +1,27 @@
+uuid: 46c1e823-5b9d-4cd5-bff4-83d59a6e6991
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_press_kit
+    - node.type.mollo_event
+  module:
+    - file
+id: node.mollo_event.field_mollo_press_kit
+field_name: field_mollo_press_kit
+entity_type: node
+bundle: mollo_event
+label: 'Press Kit'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: events/presskit
+  file_extensions: 'zip text pdf doc docx'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

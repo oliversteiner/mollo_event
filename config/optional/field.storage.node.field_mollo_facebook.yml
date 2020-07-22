@@ -1,0 +1,19 @@
+uuid: 3ad212e2-a251-4f50-a3d8-b668a556b831
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_mollo_facebook
+field_name: field_mollo_facebook
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

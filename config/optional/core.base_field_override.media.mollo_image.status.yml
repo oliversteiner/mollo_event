@@ -1,0 +1,22 @@
+uuid: 1675f9f3-4eab-4b38-8ed5-73831dd9dddb
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_image
+id: media.mollo_image.status
+field_name: status
+entity_type: media
+bundle: mollo_image
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

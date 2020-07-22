@@ -1,0 +1,19 @@
+uuid: 40da9dd2-10d8-4b2f-b3a5-057561645d82
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_mollo_galleries_external
+field_name: field_mollo_galleries_external
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

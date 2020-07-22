@@ -1,0 +1,89 @@
+uuid: dba59057-76bf-46a5-bdfd-cc917b1d637a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.mollo_event.body
+    - field.field.node.mollo_event.field_mollo_accent_color
+    - field.field.node.mollo_event.field_mollo_accent_color_dark
+    - field.field.node.mollo_event.field_mollo_accent_color_light
+    - field.field.node.mollo_event.field_mollo_accent_color_text
+    - field.field.node.mollo_event.field_mollo_archive_banner
+    - field.field.node.mollo_event.field_mollo_artist_groups
+    - field.field.node.mollo_event.field_mollo_artists
+    - field.field.node.mollo_event.field_mollo_audio
+    - field.field.node.mollo_event.field_mollo_booking
+    - field.field.node.mollo_event.field_mollo_category
+    - field.field.node.mollo_event.field_mollo_copyright_play
+    - field.field.node.mollo_event.field_mollo_description
+    - field.field.node.mollo_event.field_mollo_files
+    - field.field.node.mollo_event.field_mollo_galleries
+    - field.field.node.mollo_event.field_mollo_galleries_external
+    - field.field.node.mollo_event.field_mollo_locations
+    - field.field.node.mollo_event.field_mollo_media
+    - field.field.node.mollo_event.field_mollo_name
+    - field.field.node.mollo_event.field_mollo_notes
+    - field.field.node.mollo_event.field_mollo_number
+    - field.field.node.mollo_event.field_mollo_plot
+    - field.field.node.mollo_event.field_mollo_press_kit
+    - field.field.node.mollo_event.field_mollo_status
+    - field.field.node.mollo_event.field_mollo_subtitle
+    - field.field.node.mollo_event.field_mollo_title_image
+    - field.field.node.mollo_event.field_mollo_video
+    - field.field.node.mollo_event.field_mollo_website_external
+    - field.field.node.mollo_event.field_mollo_work
+    - field.field.node.mollo_event.field_mollo_year
+    - node.type.mollo_event
+  module:
+    - text
+    - user
+id: node.mollo_event.teaser
+targetEntityType: node
+bundle: mollo_event
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_mollo_accent_color: true
+  field_mollo_accent_color_dark: true
+  field_mollo_accent_color_light: true
+  field_mollo_accent_color_text: true
+  field_mollo_archive_banner: true
+  field_mollo_artist_groups: true
+  field_mollo_artists: true
+  field_mollo_audio: true
+  field_mollo_booking: true
+  field_mollo_category: true
+  field_mollo_copyright_play: true
+  field_mollo_description: true
+  field_mollo_files: true
+  field_mollo_galleries: true
+  field_mollo_galleries_external: true
+  field_mollo_locations: true
+  field_mollo_media: true
+  field_mollo_name: true
+  field_mollo_notes: true
+  field_mollo_number: true
+  field_mollo_plot: true
+  field_mollo_press_kit: true
+  field_mollo_status: true
+  field_mollo_subtitle: true
+  field_mollo_title_image: true
+  field_mollo_video: true
+  field_mollo_website_external: true
+  field_mollo_work: true
+  field_mollo_year: true
+  langcode: true

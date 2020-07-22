@@ -1,0 +1,20 @@
+uuid: 27bed348-ee59-4762-b811-fb2282058f85
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - node
+id: node.field_mollo_audio
+field_name: field_mollo_audio
+entity_type: node
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

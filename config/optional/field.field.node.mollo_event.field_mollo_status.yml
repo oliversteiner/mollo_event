@@ -1,0 +1,29 @@
+uuid: 582272a8-1c1a-4983-a417-22398b7c6d3a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_status
+    - node.type.mollo_event
+    - taxonomy.vocabulary.mollo_event_status
+id: node.mollo_event.field_mollo_status
+field_name: field_mollo_status
+entity_type: node
+bundle: mollo_event
+label: 'Event Status'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      mollo_event_status: mollo_event_status
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

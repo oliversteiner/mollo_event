@@ -1,0 +1,23 @@
+uuid: 8faedeec-55d0-4d91-841b-5c1714a3e343
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.mollo_event
+  module:
+    - text
+id: node.mollo_event.body
+field_name: body
+entity_type: node
+bundle: mollo_event
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

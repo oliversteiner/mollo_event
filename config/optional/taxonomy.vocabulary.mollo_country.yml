@@ -1,0 +1,8 @@
+uuid: 60080c8d-f736-4460-ba84-76f5cb395b8d
+langcode: und
+status: true
+dependencies: {  }
+name: Country
+vid: mollo_country
+description: Mollo
+weight: 0

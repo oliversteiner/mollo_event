@@ -1,0 +1,22 @@
+uuid: 89194c25-e32e-4571-9e5e-a5fcf80d1232
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: mollo_work
+label: 'Mollo Work'
+type: 'canonical_entities:node'
+pattern: '/work/[node:title]'
+selection_criteria:
+  64e689ba-dd71-4776-8629-9aafd4568a33:
+    id: node_type
+    bundles:
+      mollo_work: mollo_work
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 64e689ba-dd71-4776-8629-9aafd4568a33
+selection_logic: and
+weight: -5
+relationships: {  }

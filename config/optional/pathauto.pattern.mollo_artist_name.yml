@@ -1,0 +1,22 @@
+uuid: 809bc0e7-8f2e-4fa7-9426-f530524ec847
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: mollo_artist_name
+label: 'Mollo Artist Name'
+type: 'canonical_entities:node'
+pattern: '/artist/[node:field_mollo_first_name]-[node:field_mollo_last_name]'
+selection_criteria:
+  e1e028ad-d9d8-45f9-9d85-a9b0cd045be1:
+    id: node_type
+    bundles:
+      mollo_artist: mollo_artist
+    negate: false
+    context_mapping:
+      node: node
+    uuid: e1e028ad-d9d8-45f9-9d85-a9b0cd045be1
+selection_logic: and
+weight: -5
+relationships: {  }

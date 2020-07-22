@@ -1,0 +1,19 @@
+uuid: 7eddca47-ba2e-4def-a7d4-e8d8a3d0e3e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_premiere_place
+    - node.type.mollo_work
+id: node.mollo_work.field_mollo_premiere_place
+field_name: field_mollo_premiere_place
+entity_type: node
+bundle: mollo_work
+label: 'Premiere - Place'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

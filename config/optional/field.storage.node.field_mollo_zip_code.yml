@@ -1,0 +1,20 @@
+uuid: 49844592-6781-42c4-b8ed-bd6efea7ea02
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_mollo_zip_code
+field_name: field_mollo_zip_code
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

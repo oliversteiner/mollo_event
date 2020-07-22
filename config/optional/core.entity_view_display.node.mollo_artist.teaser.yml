@@ -1,0 +1,79 @@
+uuid: c9c27c67-97ee-4a27-9137-df6411526302
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.mollo_artist.body
+    - field.field.node.mollo_artist.field_mollo_birthday
+    - field.field.node.mollo_artist.field_mollo_city
+    - field.field.node.mollo_artist.field_mollo_email
+    - field.field.node.mollo_artist.field_mollo_entry
+    - field.field.node.mollo_artist.field_mollo_facebook
+    - field.field.node.mollo_artist.field_mollo_first_name
+    - field.field.node.mollo_artist.field_mollo_function
+    - field.field.node.mollo_artist.field_mollo_images
+    - field.field.node.mollo_artist.field_mollo_instrument
+    - field.field.node.mollo_artist.field_mollo_is_active
+    - field.field.node.mollo_artist.field_mollo_last_name
+    - field.field.node.mollo_artist.field_mollo_links
+    - field.field.node.mollo_artist.field_mollo_mobile
+    - field.field.node.mollo_artist.field_mollo_phone
+    - field.field.node.mollo_artist.field_mollo_position
+    - field.field.node.mollo_artist.field_mollo_resigning
+    - field.field.node.mollo_artist.field_mollo_speciality
+    - field.field.node.mollo_artist.field_mollo_street_and_number
+    - field.field.node.mollo_artist.field_mollo_title_image
+    - field.field.node.mollo_artist.field_mollo_token
+    - field.field.node.mollo_artist.field_mollo_user
+    - field.field.node.mollo_artist.field_mollo_voice_position
+    - field.field.node.mollo_artist.field_mollo_wikipedia
+    - field.field.node.mollo_artist.field_mollo_zip_code
+    - node.type.mollo_artist
+  module:
+    - text
+    - user
+id: node.mollo_artist.teaser
+targetEntityType: node
+bundle: mollo_artist
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_mollo_birthday: true
+  field_mollo_city: true
+  field_mollo_email: true
+  field_mollo_entry: true
+  field_mollo_facebook: true
+  field_mollo_first_name: true
+  field_mollo_function: true
+  field_mollo_images: true
+  field_mollo_instrument: true
+  field_mollo_is_active: true
+  field_mollo_last_name: true
+  field_mollo_links: true
+  field_mollo_mobile: true
+  field_mollo_phone: true
+  field_mollo_position: true
+  field_mollo_resigning: true
+  field_mollo_speciality: true
+  field_mollo_street_and_number: true
+  field_mollo_title_image: true
+  field_mollo_token: true
+  field_mollo_user: true
+  field_mollo_voice_position: true
+  field_mollo_wikipedia: true
+  field_mollo_zip_code: true
+  langcode: true

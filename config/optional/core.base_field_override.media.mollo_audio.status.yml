@@ -1,0 +1,22 @@
+uuid: c2ab4d6e-fdc2-4656-84ba-ee0915890157
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_audio
+id: media.mollo_audio.status
+field_name: status
+entity_type: media
+bundle: mollo_audio
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

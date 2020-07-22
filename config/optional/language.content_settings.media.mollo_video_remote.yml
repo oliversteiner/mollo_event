@@ -1,0 +1,11 @@
+uuid: e27af23a-782a-4d0e-809e-17fd362b0789
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.mollo_video_remote
+id: media.mollo_video_remote
+target_entity_type_id: media
+target_bundle: mollo_video_remote
+default_langcode: site_default
+language_alterable: false

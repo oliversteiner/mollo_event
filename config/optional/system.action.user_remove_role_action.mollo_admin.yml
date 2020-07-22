@@ -1,0 +1,14 @@
+uuid: 7a5b47e4-4dd2-4b5d-8e60-ffea7419c8cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.mollo_admin
+  module:
+    - user
+id: user_remove_role_action.mollo_admin
+label: 'Remove the Mollo Admin role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: mollo_admin

@@ -1,0 +1,27 @@
+uuid: 168e3010-ab94-4d8f-9d61-08f24cf4889d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_audio_file
+    - media.type.mollo_audio
+  module:
+    - file
+id: media.mollo_audio.field_media_audio_file
+field_name: field_media_audio_file
+entity_type: media
+bundle: mollo_audio
+label: 'Audio file'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_extensions: 'mp3 wav aac'
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

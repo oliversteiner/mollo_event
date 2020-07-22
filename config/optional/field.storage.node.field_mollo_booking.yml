@@ -1,0 +1,19 @@
+uuid: c7e58aef-0be9-4fb9-b884-b4ccdbd2baaa
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_mollo_booking
+field_name: field_mollo_booking
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

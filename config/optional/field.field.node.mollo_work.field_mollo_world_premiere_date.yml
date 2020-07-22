@@ -1,0 +1,21 @@
+uuid: c77ee93b-d03d-4318-af5a-a58a6bcae5da
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_world_premiere_date
+    - node.type.mollo_work
+  module:
+    - datetime
+id: node.mollo_work.field_mollo_world_premiere_date
+field_name: field_mollo_world_premiere_date
+entity_type: node
+bundle: mollo_work
+label: 'World Premiere - Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

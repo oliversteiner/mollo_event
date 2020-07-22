@@ -1,0 +1,21 @@
+uuid: 2fc1c1f6-62b0-43a1-81d3-1de11f2a23e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.mollo_audio.field_media_audio_file
+    - media.type.mollo_audio
+id: media.mollo_audio.media_library
+targetEntityType: media
+bundle: mollo_audio
+mode: media_library
+content: {  }
+hidden:
+  created: true
+  field_media_audio_file: true
+  langcode: true
+  name: true
+  path: true
+  status: true
+  uid: true

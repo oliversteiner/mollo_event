@@ -1,0 +1,19 @@
+uuid: 113c8c6d-6e51-40e5-9502-53d5a194ed3a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_accent_color_light
+    - node.type.mollo_event
+id: node.mollo_event.field_mollo_accent_color_light
+field_name: field_mollo_accent_color_light
+entity_type: node
+bundle: mollo_event
+label: 'Accent Color Light'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

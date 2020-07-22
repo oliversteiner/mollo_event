@@ -1,0 +1,19 @@
+uuid: f70b93e6-9b12-4d61-9859-bd7ef14f9fb9
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_mollo_source_origin
+field_name: field_mollo_source_origin
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

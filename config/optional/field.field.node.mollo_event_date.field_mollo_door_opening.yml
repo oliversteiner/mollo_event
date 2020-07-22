@@ -1,0 +1,21 @@
+uuid: 9a295fd9-abdf-4e26-bf5e-fa7a7ef4833d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_door_opening
+    - node.type.mollo_event_date
+  module:
+    - datetime
+id: node.mollo_event_date.field_mollo_door_opening
+field_name: field_mollo_door_opening
+entity_type: node
+bundle: mollo_event_date
+label: 'Door Opening'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

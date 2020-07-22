@@ -1,0 +1,19 @@
+uuid: 554b4b98-8b03-4713-9713-19880f9f28d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_email
+    - node.type.mollo_artist
+id: node.mollo_artist.field_mollo_email
+field_name: field_mollo_email
+entity_type: node
+bundle: mollo_artist
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,0 +1,22 @@
+uuid: 75ddf761-1acc-42d2-8ede-6b059b4e72ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.mollo_artist_group
+id: node.mollo_artist_group.status
+field_name: status
+entity_type: node
+bundle: mollo_artist_group
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

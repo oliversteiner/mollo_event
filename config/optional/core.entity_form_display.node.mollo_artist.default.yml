@@ -1,0 +1,374 @@
+uuid: d5660588-990c-4309-bbf3-61ca649e396d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.mollo_artist.body
+    - field.field.node.mollo_artist.field_mollo_birthday
+    - field.field.node.mollo_artist.field_mollo_city
+    - field.field.node.mollo_artist.field_mollo_email
+    - field.field.node.mollo_artist.field_mollo_entry
+    - field.field.node.mollo_artist.field_mollo_facebook
+    - field.field.node.mollo_artist.field_mollo_first_name
+    - field.field.node.mollo_artist.field_mollo_function
+    - field.field.node.mollo_artist.field_mollo_images
+    - field.field.node.mollo_artist.field_mollo_instrument
+    - field.field.node.mollo_artist.field_mollo_is_active
+    - field.field.node.mollo_artist.field_mollo_last_name
+    - field.field.node.mollo_artist.field_mollo_links
+    - field.field.node.mollo_artist.field_mollo_mobile
+    - field.field.node.mollo_artist.field_mollo_phone
+    - field.field.node.mollo_artist.field_mollo_position
+    - field.field.node.mollo_artist.field_mollo_resigning
+    - field.field.node.mollo_artist.field_mollo_speciality
+    - field.field.node.mollo_artist.field_mollo_street_and_number
+    - field.field.node.mollo_artist.field_mollo_title_image
+    - field.field.node.mollo_artist.field_mollo_token
+    - field.field.node.mollo_artist.field_mollo_user
+    - field.field.node.mollo_artist.field_mollo_voice_position
+    - field.field.node.mollo_artist.field_mollo_wikipedia
+    - field.field.node.mollo_artist.field_mollo_zip_code
+    - image.style.thumbnail
+    - node.type.mollo_artist
+  module:
+    - datetime
+    - field_group
+    - image
+    - link
+    - media_library
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_personal:
+      children:
+        - field_mollo_first_name
+        - field_mollo_last_name
+        - field_mollo_birthday
+        - field_mollo_images
+      parent_name: ''
+      weight: 1
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: true
+        required_fields: true
+      label: Personal
+    group_contact:
+      children:
+        - field_mollo_email
+        - field_mollo_mobile
+        - field_mollo_phone
+        - field_mollo_links
+        - field_mollo_facebook
+        - field_mollo_wikipedia
+      parent_name: ''
+      weight: 3
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: true
+        required_fields: true
+      label: Contact
+    group_address:
+      children:
+        - field_mollo_zip_code
+        - field_mollo_street_and_number
+        - field_mollo_city
+      parent_name: ''
+      weight: 4
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: false
+        required_fields: true
+      label: Address
+    group_helper:
+      children:
+        - field_mollo_user
+        - field_mollo_token
+      parent_name: ''
+      weight: 5
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: false
+        required_fields: true
+      label: Helper
+    group_general:
+      children:
+        - field_mollo_is_active
+        - field_mollo_entry
+        - field_mollo_resigning
+        - field_mollo_title_image
+      parent_name: ''
+      weight: 0
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: true
+        required_fields: true
+      label: General
+    group_properties:
+      children:
+        - field_mollo_speciality
+        - field_mollo_voice_position
+        - field_mollo_instrument
+        - field_mollo_function
+        - field_mollo_position
+      parent_name: ''
+      weight: 2
+      format_type: details
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        open: true
+        required_fields: true
+      label: Properties
+id: node.mollo_artist.default
+targetEntityType: node
+bundle: mollo_artist
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 6
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+    region: content
+  field_mollo_birthday:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_city:
+    weight: 35
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_email:
+    weight: 31
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_mollo_entry:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_facebook:
+    weight: 35
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_mollo_first_name:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_function:
+    weight: 13
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_images:
+    weight: 3
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_mollo_instrument:
+    weight: 12
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_is_active:
+    weight: 9
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_mollo_last_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_links:
+    weight: 34
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_mollo_mobile:
+    weight: 32
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_phone:
+    weight: 33
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_position:
+    weight: 14
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_resigning:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mollo_speciality:
+    weight: 10
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_street_and_number:
+    weight: 34
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_title_image:
+    weight: 12
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+    type: media_library_widget
+    region: content
+  field_mollo_token:
+    weight: 35
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_mollo_user:
+    weight: 34
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_voice_position:
+    weight: 11
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mollo_wikipedia:
+    weight: 36
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_mollo_zip_code:
+    weight: 33
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  path:
+    type: path
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 8
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  title: true
+  uid: true

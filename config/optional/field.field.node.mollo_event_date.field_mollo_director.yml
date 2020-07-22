@@ -1,0 +1,28 @@
+uuid: 410878ee-7698-4592-9c73-a8eb4c06cb34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_director
+    - node.type.mollo_artist
+    - node.type.mollo_event_date
+id: node.mollo_event_date.field_mollo_director
+field_name: field_mollo_director
+entity_type: node
+bundle: mollo_event_date
+label: Director
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      mollo_artist: mollo_artist
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

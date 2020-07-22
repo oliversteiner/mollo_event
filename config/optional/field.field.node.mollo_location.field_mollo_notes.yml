@@ -1,0 +1,29 @@
+uuid: d6c11da0-055a-4ce2-bc24-60f1530e9074
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mollo_notes
+    - node.type.mollo_location
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    plain_text: plain_text
+    full_html: full_html
+    text: '0'
+    html_email: '0'
+    json: '0'
+id: node.mollo_location.field_mollo_notes
+field_name: field_mollo_notes
+entity_type: node
+bundle: mollo_location
+label: Notes
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
