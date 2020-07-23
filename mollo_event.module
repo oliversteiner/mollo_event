@@ -6,12 +6,19 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\mollo_event\Controller\ArtistController;
+use Drupal\mollo_event\Controller\EventDatesController;
+use Drupal\mollo_event\Controller\LocationController;
+use Drupal\mollo_event\Controller\PreloadController;
+use Drupal\mollo_event\Controller\WorkController;
+use Drupal\mollo_utils\Utility\Helper;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_help().
  */
-function mollo_event_help($route_name, RouteMatchInterface $route_match)
-{
+function mollo_event_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the mollo_event module.
     case 'help.page.mollo_event':
@@ -27,8 +34,7 @@ function mollo_event_help($route_name, RouteMatchInterface $route_match)
 /**
  * Implements hook_theme().
  */
-function mollo_event_theme()
-{
+function mollo_event_theme() {
   return [
     'mollo_event' => [
       'render element' => 'children',
@@ -37,27 +43,27 @@ function mollo_event_theme()
 }
 
 
-function mollo_event_form_alter(&$form, &$form_state, $form_id)
-{
+function mollo_event_form_alter(&$form, &$form_state, $form_id) {
 
-  // Show Menu with Names on List Filter
-  // - role
-  // -
-  // -
   if ($form['#id'] === 'views-exposed-form-event-dates-admin-list' ||
-    $form['#id'] === 'views-exposed-form-roles-admin-list' ||
-    $form['#id'] === 'views-exposed-form-leadership-admin-list'
+    $form['#id'] === 'views-exposed-form-roles-admin-list'
+//    || $form['#id'] === 'views-exposed-form-mollo-artist-roles-admin-list'
+
   ) {
 
-    $nids = \Drupal::entityQuery('node')->condition('type', 'mollo_event')->execute();
-    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
-    $options = ['' => 'All'];
+    $nids = \Drupal::entityQuery('node')
+      ->condition('type', 'mollo_event')
+      ->execute();
+    $nodes = Node::loadMultiple($nids);
+    $options = ['' => '-- Alle --']; // TODO Add Translation
 
     foreach ($nodes as $nid => $node) {
       $value = $node->get('field_mollo_name')->getString();
 
       if (isset($value)) {
         $options[$value] = $value;
+    //    $options_solo[$nid] = $value;
+
       }
     }
 
@@ -66,5 +72,408 @@ function mollo_event_form_alter(&$form, &$form_state, $form_id)
       $form['event']['#options'] = $options;
       $form['event']['#size'] = 1;
     }
+
   }
+
+}
+
+function preprocess_mollo_event(&$variables) {
+  //  nid
+  $node = Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof NodeInterface) {
+    $event_id = $node->id();
+
+
+
+// Event Number
+    $event_number = $node->get('field_mollo_number')->getValue();
+    $event_number = $event_number[0]['value'];
+
+
+    $vocabularies = PreloadController::getVars();
+    $artists = ArtistController::getArtistsFromEvent($event_id);
+    $musicians = ArtistController::getArtistsFromEvent($event_id, TRUE);
+
+    // Event Work
+    $work_id = $node->get('field_mollo_work')->getValue();
+    if($work_id){
+    $work_id = $work_id[0]['target_id'];
+    $variables['work'] = WorkController::getVars($work_id, $vocabularies);
+    }
+
+    // get Twig Variables
+    $variables['artists'] = $artists;
+    $variables['musicians'] = ArtistController::getFilteredArtist($musicians, $vocabularies, 'musician');
+    $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
+    $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
+    $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);
+
+    // Locations
+    $locations = [];
+    // get Location IDs
+    $location_ids = Helper::getFieldValue($node, 'field_mollo_locations');
+    // Nodes found
+    if (count($location_ids) !== 0) {
+      // Load all Locations
+      foreach ($location_ids as $location_id) {
+        // Output Array
+        $locations[] = LocationController::getVars($location_id);
+      }
+    }
+    $variables['locations'] = $locations;
+
+
+    // Dates
+    $variables['event_dates'] = EventDatesController::getDatesFromEvent($event_id, $vocabularies, $locations);
+
+  }
+
+
+
+}
+
+
+function buildEvents($event_id) {
+
+  $variables = [];
+  $nids_flatten = [];
+
+  // load all Nids from "mitwirkende" for this Operette
+  $query = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('status', 1)
+    ->condition('type', 'events')
+    ->condition('field_mollo_event_1', $event_id)
+    //
+    // Order by
+    ->sort('field_datum', 'ASC')
+    //
+    // Access
+    ->accessCheck(FALSE);
+
+
+  $nids = $query->execute();
+  foreach ($nids as $nid) {
+    $nids_flatten[] = $nid;
+  }
+
+
+  $count = count($nids_flatten);
+  $variables['anzahl'] = $count;
+  $nid_first = reset($nids_flatten);
+  $nid_last = end($nids_flatten);
+  // Premiere
+  if ($nid_first) {
+    $node = NODE::load($nid_first);
+    if (isset($node) && !$node->field_datum->isEmpty()) {
+      $value = $node->field_datum->getValue();
+      if (isset($value[0])) {
+        $variables['premiere'] = $value[0]['value'];
+      }
+    }
+  }
+  // Derniere
+  if ($node && $nid_last) {
+    $node = NODE::load($nid_last);
+    if (isset($node) && !$node->field_datum->isEmpty()) {
+      $value = $node->field_datum->getValue();
+      if (isset($value[0])) {
+        $variables['derniere'] = $value[0]['value'];
+      }
+    }
+  }
+
+  return $variables;
+
+}
+
+
+/**
+ * @param $node
+ *
+ * @return array
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function buildAccentColor($node) {
+  // Default-Color: Operette Möriken Red
+  $default = "#6E1226";
+  $text = "#6E1226";
+  $light = "#e7dfdf";
+  $dark = "#31020c";
+
+  // Default
+
+  $default = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color'
+  );
+
+  // Text
+
+  $text = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_text'
+  );
+  // Light
+
+  $light = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_light'
+  );
+  // Dark
+
+  $dark = Helper::getFieldValue(
+    $node,
+    'field_mollo_accent_color_dark'
+  );
+
+
+  return [
+    'default' => $default,
+    'text' => $text,
+    'light' => $light,
+    'dark' => $dark,
+  ];
+}
+
+function preloadVars($event_id) {
+
+  $funktion_terms = [];
+  $funktion_tids = [];
+
+  $funktion_kreativteam_terms = [];
+  $funktion_kreativteam_tids = [];
+
+
+  $stimmlage_terms = [];
+  $stimmlage_tids = [];
+
+  $instrumente_terms = [];
+  $instrumente_tids = [];
+
+  $rollen = [];
+  $auffuehrungen = [];
+  $kreativ_team = [];
+
+  $gruppenfotos = [];
+
+
+  // Load taxonomy "funktion"
+  $vid = 'mollo_function';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $funktion_terms[$term->name] = $term->tid;
+    $funktion_tids[$term->tid] = $term->name;
+
+  }
+
+
+  // Load taxonomy "funktion Kreativ Team"
+  $vid = 'mollo_position';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $funktion_kreativteam_terms[$term->name] = $term->tid;
+    $funktion_kreativteam_tids[$term->tid] = $term->name;
+
+  }
+
+  // Load taxonomy "stimmlage"
+  $vid = 'mollo_voice_position';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $stimmlage_terms[$term->name] = $term->tid;
+    $stimmlage_tids[$term->tid] = $term->name;
+  }
+
+
+  // Load taxonomy "instrumente"
+  $vid = 'mollo_instrument';
+  $terms = Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $instrumente_terms[$term->name] = $term->tid;
+    $instrumente_tids[$term->tid] = $term->name;
+  }
+
+
+  // ==========   Load all Auffuehrungen
+  /*
+    $query_auffuehrungen = Drupal::entityQuery('node')
+      //
+      // Condition
+      ->condition('type', 'operette')
+      ->accessCheck(FALSE);
+
+
+    $nids_auffuehrungen = $query_auffuehrungen->execute();
+    $nodes_auffuehrungen = Node::loadMultiple($nids_auffuehrungen);
+
+    foreach ($nodes_auffuehrungen as $node_auffuehrung) {
+      $auffuehrung_jahr = '';
+
+
+      // Get Name
+      $auffuehrung_name = $node_auffuehrung->label();
+      $auffuehrung_nid = $node_auffuehrung->id();
+
+
+      // Get Year
+      if (!$node_auffuehrung->field_jahr->isEmpty()) {
+        $value = $node_auffuehrung->field_jahr->getValue();
+        if (!empty($value[0]['value'])) {
+
+          $auffuehrung_jahr = $value[0]['value'];
+        }
+      }
+      $auffuehrungen[$auffuehrung_nid]['name'] = $auffuehrung_name;
+      $auffuehrungen[$auffuehrung_nid]['jahr'] = $auffuehrung_jahr;
+    }*/
+
+
+  // ==========   Load all Roles
+
+  $query_rollen = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('type', 'rolle')
+    ->condition('field_mollo_event_1', $event_id)
+    ->accessCheck(FALSE);
+
+
+  $nids_rollen = $query_rollen->execute();
+  $nodes_rollen = Node::loadMultiple($nids_rollen);
+
+  foreach ($nodes_rollen as $node_rolle) {
+    $rollenname = '';
+    $rollenbeschreibung = '';
+
+    // Get all Rollenname
+    if (!$node_rolle->field_rollenname->isEmpty()) {
+      $value = $node_rolle->field_rollenname->getValue();
+      if (!empty($value[0]['value'])) {
+        $rollenname = $value[0]['value'];
+      }
+    }
+
+    // Get all Rollenbeschreibung
+    if (!$node_rolle->field_rollenbeschreibung->isEmpty()) {
+      $value = $node_rolle->field_rollenbeschreibung->getValue();
+      if (!empty($value[0]['value'])) {
+
+        $rollenbeschreibung = $value[0]['value'];
+      }
+    }
+
+    // List all IDs from Mitwirkende and add its corresponding Rollenname
+    if (!$node_rolle->field_mitwirkender->isEmpty()) {
+      $values = $node_rolle->field_mitwirkender->getValue();
+
+      foreach ($values as $value) {
+        $mitwirkender_id = $value['target_id'];
+        $rollen[$mitwirkender_id]['rollenname'] = $rollenname;
+        $rollen[$mitwirkender_id]['rollenbeschreibung'] = $rollenbeschreibung;
+      }
+    }
+
+
+  }
+
+
+  // ==========   Load all Kreativ Team
+
+  $query_kreativ_team = Drupal::entityQuery('node')
+    //
+    // Condition
+    ->condition('type', 'kreativteam')
+    ->condition('field_mollo_event_1', $event_id)
+    ->accessCheck(FALSE);
+
+
+  $nids_kreativ_team = $query_kreativ_team->execute();
+  $nodes_kreativ_team = Node::loadMultiple($nids_kreativ_team);
+
+  foreach ($nodes_kreativ_team as $node_kreativ_team) {
+
+    // Funktion
+    $kreativ_team_function_tids = [];
+    $kreativ_team_function_names = [];
+
+
+    // load all Functions
+    if (!$node_kreativ_team->field_kreativ_team_funktion->isEmpty()) {
+      $values = $node_kreativ_team->field_kreativ_team_funktion->getValue();
+
+      foreach ($values as $value) {
+        $funktion_id = $value['target_id'];
+        $kreativ_team_function_tids[] = $funktion_id;
+        $kreativ_team_function_names[] = $funktion_kreativteam_tids[$funktion_id];
+      }
+    }
+
+
+    // List all IDs from Mitwirkende and add its corresponding Rollenname
+    if (!$node_kreativ_team->field_mitwirkender->isEmpty()) {
+      $values = $node_kreativ_team->field_mitwirkender->getValue();
+
+      foreach ($values as $value) {
+        $mitwirkender_id = $value['target_id'];
+        $kreativ_team[$mitwirkender_id]['tids'] = $kreativ_team_function_tids;
+        $kreativ_team[$mitwirkender_id]['names'] = $kreativ_team_function_names;
+      }
+    }
+  }
+
+
+  $vars = [
+    'funktion_terms' => $funktion_terms,
+    'funktion_tids' => $funktion_tids,
+    'funktion_kreativteam_terms' => $funktion_kreativteam_terms,
+    'funktion_kreativteam_tids' => $funktion_kreativteam_tids,
+    'stimmlage_terms' => $stimmlage_terms,
+    'stimmlage_tids' => $stimmlage_tids,
+    'instrumente_terms' => $instrumente_terms,
+    'instrumente_tids' => $instrumente_tids,
+    'rollen' => $rollen,
+    'auffuehrungen' => $auffuehrungen,
+    'kreativ_team' => $kreativ_team,
+    'gruppenfotos' => $gruppenfotos,
+  ];
+
+  return $vars;
+
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * @param $variables
+ */
+function mollo_event_preprocess_node(&$variables) {
+
+  $current_user = Drupal::currentUser();
+  $user_roles = $current_user->getRoles();
+
+  $admin_users = ['administrator', 'editor'];
+  $node_type = $variables['node']->getType();
+
+
+  switch ($node_type) {
+
+    case "mollo_event":
+      preprocess_mollo_event($variables);
+      break;
+
+  }
+
+
 }
