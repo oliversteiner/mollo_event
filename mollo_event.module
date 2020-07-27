@@ -95,10 +95,12 @@ function preprocess_mollo_event(&$variables) {
     $musicians = ArtistController::getArtistsFromEvent($event_id, TRUE);
 
     // Event Work
-    $work_id = $node->get('field_mollo_work')->getValue();
-    if($work_id){
-    $work_id = $work_id[0]['target_id'];
-    $variables['work'] = WorkController::getVars($work_id, $vocabularies);
+    $work_ids = $node->get('field_mollo_work')->getValue();
+    if(count($work_ids) > 0){
+      foreach ($work_ids as $work_id){
+        $work_id = $work_id['target_id'];
+        $variables['works'][] = WorkController::getVars($work_id, $vocabularies);
+      }
     }
 
     // get Twig Variables

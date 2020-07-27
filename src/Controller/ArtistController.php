@@ -209,6 +209,7 @@ class ArtistController extends ControllerBase
         'id' => $artist_id,
         'first_name' => $first_name,
         'last_name' => $last_name,
+        'name' => $first_name.' '.$last_name,
         'function' => $function,
         'voice_position' => $voice_position,
         'instrument' => $instrument,
