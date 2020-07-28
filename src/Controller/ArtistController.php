@@ -24,6 +24,8 @@ class ArtistController extends ControllerBase
 
   public $birthday;
 
+  public $text;
+
   public $city;
 
   public $email;
@@ -152,6 +154,7 @@ class ArtistController extends ControllerBase
       // Get Field Values
       $first_name = Helper::getFieldValue($node, 'field_mollo_first_name');
       $last_name = Helper::getFieldValue($node, 'field_mollo_last_name');
+      $text = Helper::getFieldValue($node, 'body');
 
       // Get only IDs
       $title_image = Helper::getFieldValue($node, 'field_mollo_title_image');
@@ -210,6 +213,7 @@ class ArtistController extends ControllerBase
         'first_name' => $first_name,
         'last_name' => $last_name,
         'name' => $first_name.' '.$last_name,
+        'text' => $text,
         'function' => $function,
         'voice_position' => $voice_position,
         'instrument' => $instrument,
