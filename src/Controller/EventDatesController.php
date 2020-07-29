@@ -140,6 +140,8 @@ class EventDatesController extends ControllerBase
       // Condition
       ->condition('type', 'mollo_event_date')
       ->condition('field_mollo_event', $event_id)
+      // Order
+        ->sort('field_mollo_start', 'ASC')
       // Access
       ->accessCheck(false);
 
@@ -153,7 +155,7 @@ class EventDatesController extends ControllerBase
         $date = self::getVars($date_id, $vocabularies);
 
         // Add Location
-        // TODO get only first Location now
+        // TODO can only get first Location
         $location_ids = $date['location_ids'];
         foreach ($locations as $location){
           if($location['id'] === $location_ids[0]){

@@ -110,6 +110,7 @@ function preprocess_mollo_event(&$variables) {
     $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
     $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);
     $variables['unig_ids'] = Helper::getFieldValue($node, 'field_mollo_galleries', null,true);
+    $variables['event_status'] = Helper::getFieldValue($node, 'field_mollo_status', 'mollo_event_status',false);
 
     // Locations
     $locations = [];
