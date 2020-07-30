@@ -47,7 +47,7 @@ function mollo_event_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form['#id'] === 'views-exposed-form-event-dates-admin-list' ||
     $form['#id'] === 'views-exposed-form-roles-admin-list'
-//    || $form['#id'] === 'views-exposed-form-mollo-artist-roles-admin-list'
+    //    || $form['#id'] === 'views-exposed-form-mollo-artist-roles-admin-list'
 
   ) {
 
@@ -62,7 +62,7 @@ function mollo_event_form_alter(&$form, &$form_state, $form_id) {
 
       if (isset($value)) {
         $options[$value] = $value;
-    //    $options_solo[$nid] = $value;
+        //    $options_solo[$nid] = $value;
 
       }
     }
@@ -84,11 +84,7 @@ function preprocess_mollo_event(&$variables) {
     $event_id = $node->id();
 
 
-
-// Event Number
-    $event_number = $node->get('field_mollo_number')->getValue();
-    $event_number = $event_number[0]['value'];
-
+    // Event Number
 
     $vocabularies = PreloadController::getVars();
     $artists = ArtistController::getArtistsFromEvent($event_id);
@@ -96,8 +92,8 @@ function preprocess_mollo_event(&$variables) {
 
     // Event Work
     $work_ids = $node->get('field_mollo_work')->getValue();
-    if(count($work_ids) > 0){
-      foreach ($work_ids as $work_id){
+    if (count($work_ids) > 0) {
+      foreach ($work_ids as $work_id) {
         $work_id = $work_id['target_id'];
         $variables['works'][] = WorkController::getVars($work_id, $vocabularies);
       }
@@ -106,18 +102,18 @@ function preprocess_mollo_event(&$variables) {
     // get Twig Variables
     $variables['artists'] = $artists;
     $variables['musicians'] = ArtistController::getFilteredArtist($musicians, $vocabularies, 'musician');
-    $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies,'singers');
+    $variables['singers'] = ArtistController::getFilteredArtist($artists, $vocabularies, 'singers');
     $variables['solo_artists'] = ArtistController::getSoloArtist($event_id, $artists, $vocabularies);
     $variables['leadership'] = ArtistController::getLeaderShip($event_id, $artists, $vocabularies);
-    $variables['unig_ids'] = Helper::getFieldValue($node, 'field_mollo_galleries', null,true);
-    $variables['event_status'] = Helper::getFieldValue($node, 'field_mollo_status', 'mollo_event_status',false);
+    $variables['unig_ids'] = Helper::getFieldValue($node, 'field_mollo_galleries', NULL, TRUE);
+    $variables['event_status'] = Helper::getFieldValue($node, 'field_mollo_status', 'mollo_event_status', FALSE);
 
     // Locations
     $locations = [];
     // get Location IDs
-    $location_ids = Helper::getFieldValue($node, 'field_mollo_locations');
+    $location_ids = Helper::getFieldValue($node, 'field_mollo_locations', NULL, TRUE);
     // Nodes found
-    if (count($location_ids) !== 0) {
+    if (isset($location_ids) && count($location_ids) !== 0) {
       // Load all Locations
       foreach ($location_ids as $location_id) {
         // Output Array
@@ -131,7 +127,6 @@ function preprocess_mollo_event(&$variables) {
     $variables['event_dates'] = EventDatesController::getDatesFromEvent($event_id, $vocabularies, $locations);
 
   }
-
 
 
 }
