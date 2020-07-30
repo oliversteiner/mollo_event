@@ -4,6 +4,7 @@ namespace Drupal\mollo_event\Controller;
 
 use Drupal;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\media\Entity\Media;
 use Drupal\mollo_utils\Utility\Helper;
 
 /**
@@ -14,8 +15,8 @@ use Drupal\mollo_utils\Utility\Helper;
  *  Bundle mollo_work
  * -----------------------------------------
  */
-class ArtistController extends ControllerBase
-{
+class ArtistController extends ControllerBase {
+
   // public  Vars for Twig Var Suggestion.
   // use in Template via:
   // {# @var artist \Drupal\mollo_event\Controller\ArtistController #}
@@ -37,6 +38,8 @@ class ArtistController extends ControllerBase
   public $facebook;
 
   public $first_name;
+
+  public $name;
 
   public $function;
 
@@ -64,7 +67,7 @@ class ArtistController extends ControllerBase
 
   public $street_and_number;
 
-  public $title_image;
+  public $image;
 
   public $token;
 
@@ -85,6 +88,7 @@ class ArtistController extends ControllerBase
   public $leadership;
 
   public $icon;
+
   public $id;
 
   /**
@@ -144,8 +148,7 @@ class ArtistController extends ControllerBase
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getVars($artist_id): array
-  {
+  public static function getVars($artist_id): array {
     $node = Drupal::entityTypeManager()
       ->getStorage('node')
       ->load($artist_id);
@@ -157,54 +160,67 @@ class ArtistController extends ControllerBase
       $text = Helper::getFieldValue($node, 'body');
 
       // Get only IDs
-      $title_image = Helper::getFieldValue($node, 'field_mollo_title_image');
+      $image = [];
+      $media_id = Helper::getFieldValue($node, 'field_mollo_title_image');
+      if ($media_id) {
+        $media = Media::load($media_id);
+      }
+
+      if (isset($media)) {
+        $uri = $media->field_media_image->entity->getFileUri();
+        $url = file_create_url($uri);
+        $image = [
+          'id' => $media_id,
+          'uri' => $uri,
+          'url' => $url,
+        ];
+      }
 
       // Get Taxonomy Content
       $voice_position = Helper::getFieldValue(
         $node,
         'field_mollo_voice_position',
         'mollo_voice_position',
-        true
+        TRUE
       );
       $function = Helper::getFieldValue(
         $node,
         'field_mollo_function',
         'mollo_function',
-        true
+        TRUE
       );
       $instrument = Helper::getFieldValue(
         $node,
         'field_mollo_instrument',
         'mollo_instrument',
-        true
+        TRUE
       );
       $position = Helper::getFieldValue(
         $node,
         'field_mollo_position',
         'mollo_position',
-        true
+        TRUE
       );
       $speciality = Helper::getFieldValue(
         $node,
         'field_mollo_speciality',
         'mollo_speciality',
-        true
+        TRUE
       );
       $country = Helper::getFieldValue(
         $node,
         'field_mollo_country',
         'mollo_country',
-        true
+        TRUE
       );
 
       // Icon
       $icon = '';
       $value = $node->get('field_mollo_instrument')->getValue();
-      if($value){
+      if ($value) {
         $instrument_id = $value[0]['target_id'];
         $icon = Helper::getTermIconByID($instrument_id);
       }
-
 
 
       // Build Variables Array
@@ -212,7 +228,7 @@ class ArtistController extends ControllerBase
         'id' => $artist_id,
         'first_name' => $first_name,
         'last_name' => $last_name,
-        'name' => $first_name.' '.$last_name,
+        'name' => $first_name . ' ' . $last_name,
         'text' => $text,
         'function' => $function,
         'voice_position' => $voice_position,
@@ -220,7 +236,7 @@ class ArtistController extends ControllerBase
         'icon' => $icon,
         'position' => $position,
         'speciality' => $speciality,
-        'image' => $title_image,
+        'image' => $image,
         'country' => $country,
       ];
     }
@@ -252,8 +268,7 @@ class ArtistController extends ControllerBase
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getRoleVars($role_id): array
-  {
+  public static function getRoleVars($role_id): array {
     $node = Drupal::entityTypeManager()
       ->getStorage('node')
       ->load($role_id);
@@ -269,7 +284,7 @@ class ArtistController extends ControllerBase
         'id' => $role_id,
         'name' => $name,
         'description' => $description,
-        'artist_id' => $artist_id
+        'artist_id' => $artist_id,
       ];
     }
 
@@ -296,8 +311,7 @@ class ArtistController extends ControllerBase
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getLeaderShipVars($leader_id): array
-  {
+  public static function getLeaderShipVars($leader_id): array {
     $node = Drupal::entityTypeManager()
       ->getStorage('node')
       ->load($leader_id);
@@ -311,7 +325,7 @@ class ArtistController extends ControllerBase
       return [
         'id' => $leader_id,
         'position_id' => $position_id,
-        'artist_id' => $artist_id
+        'artist_id' => $artist_id,
       ];
     }
 
@@ -328,12 +342,12 @@ class ArtistController extends ControllerBase
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function getArtistsFromEvent($event_id, $musicians = FALSE): array
-  {
+  public static function getArtistsFromEvent($event_id, $musicians = FALSE): array {
     $all_artists = [];
-    if($musicians){
+    if ($musicians) {
       $field_event = 'field_mollo_event_orchestra';
-    }else{
+    }
+    else {
       $field_event = 'field_mollo_event';
 
     }
@@ -345,7 +359,7 @@ class ArtistController extends ControllerBase
       ->condition('type', 'mollo_artist')
       ->condition($field_event, $event_id)
       // Access
-      ->accessCheck(false);
+      ->accessCheck(FALSE);
 
     $artist_ids = $query->execute();
 
@@ -408,7 +422,7 @@ class ArtistController extends ControllerBase
       if (count($artists_filtered) > 0) {
         $terms[] = [
           'name' => $term_name,
-          'artists' => $artists_filtered
+          'artists' => $artists_filtered,
         ];
       }
     }
@@ -442,11 +456,11 @@ class ArtistController extends ControllerBase
     foreach ($artists as $artist) {
       foreach ($artist['function'] as $function) {
         // Needle in Function (Choir, Orchestra, Leadership)
-        if (in_array($needle, $artist['function'], true)) {
+        if (in_array($needle, $artist['function'], TRUE)) {
           // term in Voc ( Voice Position, Instruments
-          if (in_array($term_name, $artist[$vocabulary], true)) {
+          if (in_array($term_name, $artist[$vocabulary], TRUE)) {
             // Eliminate duplicates
-            if (!in_array($artist['id'], $ids, true)) {
+            if (!in_array($artist['id'], $ids, TRUE)) {
               $ids[] = $artist['id'];
 
               // Add filterd Artist to Result
@@ -478,12 +492,12 @@ class ArtistController extends ControllerBase
     foreach ($artists as $artist) {
       foreach ($artist['function'] as $function) {
         // Needle in Function (Choir, Orchestra, Leadership)
-        if (in_array($needle, $artist['function'], true)) {
-            // Eliminate duplicates
-            if (!in_array($artist['id'], $ids, true)) {
-              $ids[] = $artist['id'];
-              // Add filterd Artist to Result
-              $results[] = $artist;
+        if (in_array($needle, $artist['function'], TRUE)) {
+          // Eliminate duplicates
+          if (!in_array($artist['id'], $ids, TRUE)) {
+            $ids[] = $artist['id'];
+            // Add filterd Artist to Result
+            $results[] = $artist;
           }
         }
       }
@@ -508,7 +522,7 @@ class ArtistController extends ControllerBase
       ->condition('type', 'mollo_role')
       ->condition('field_mollo_event_1', $event_id)
       // Access
-      ->accessCheck(false);
+      ->accessCheck(FALSE);
 
     $role_ids = $query->execute();
 
@@ -548,7 +562,8 @@ class ArtistController extends ControllerBase
 
       if (count($role_group) === 1) {
         $solo_artists[0]['artists'][] = $role_group[0];
-      } else {
+      }
+      else {
         foreach ($role_group as $artist) {
           $solo_artists[$i]['name'] = $artist['role_name'];
           $solo_artists[$i]['artists'][] = $artist;
@@ -576,7 +591,7 @@ class ArtistController extends ControllerBase
       ->condition('type', 'mollo_event_leadership')
       ->condition('field_mollo_event_1', $event_id)
       // Access
-      ->accessCheck(false);
+      ->accessCheck(FALSE);
 
     $leader_ids = $query->execute();
 
@@ -613,4 +628,5 @@ class ArtistController extends ControllerBase
 
     return $leadership;
   }
+
 }
