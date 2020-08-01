@@ -82,13 +82,13 @@ class EventDatesController extends ControllerBase
       ->load($date_id);
 
     if (isset($node)) {
-      $event = Helper::getFieldValue($node, 'field_mollo_event');
+      $event = Helper::getFieldValue($node, 'field_mollo_event_1');
       $number = Helper::getFieldValue($node, 'field_mollo_number');
       $status = Helper::getFieldValue($node, 'field_mollo_status');
       $start = Helper::getFieldValue($node, 'field_mollo_start');
       $end = Helper::getFieldValue($node, 'field_mollo_end');
       $door_opening = Helper::getFieldValue($node, 'field_mollo_door_opening');
-      $location_ids = Helper::getFieldValue($node, 'field_mollo_locations',null,TRUE);
+      $location_ids = Helper::getFieldValue($node, 'field_mollo_location_solo',null,TRUE);
       $description = Helper::getFieldValue($node, 'field_mollo_description');
       $show_start = Helper::getFieldValue($node, 'field_mollo_show_start');
       $show_end = Helper::getFieldValue($node, 'field_mollo_show_end');
