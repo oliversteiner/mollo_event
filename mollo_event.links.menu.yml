@@ -20,7 +20,7 @@ mollo_event.list:
 #
 mollo_event.work:
   title:  'Works'
-  description: 'Show all Events'
+  description: 'Show all Works'
   route_name: mollo_event.work.list
   parent: 'mollo_event.main'
 #
@@ -40,10 +40,18 @@ mollo_event.dates:
   route_name: mollo_event.date.list
   parent: 'mollo_event.main'
 #
-# Content > Events > Dates
+# Content > Events > Leadership
 #
 mollo_event.leadership:
   title:  'Leadership'
   description: 'Show Leaderships from Events'
   route_name: mollo_event.leadership.list
+  parent: 'mollo_event.main'
+#
+# Content > Artist > Roles
+#
+mollo_event.role:
+  title: 'Roles'
+  description: 'Show all Roles'
+  route_name: mollo_event.role.list
   parent: 'mollo_event.main'

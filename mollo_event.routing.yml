@@ -44,11 +44,12 @@ mollo_event.leadership.list:
   requirements:
     _permission: 'administer content'
 
-
-mollo_event.preload_controller_getVars:
-  path: '/mollo_event/getVars'
+#
+# View Roles
+#
+mollo_event.role.list:
+  path: '/admin/role/list'
   defaults:
-    _controller: '\Drupal\mollo_event\Controller\PreloadController::getVars'
-    _title: 'getVars'
+    _title: 'Roles'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer content'
